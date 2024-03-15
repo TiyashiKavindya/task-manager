@@ -10,3 +10,8 @@ coverage
 
 # Benchmarking
 benchmarks/graphs
+
+# environment
+.env
+.env.local
+config/config.ts
