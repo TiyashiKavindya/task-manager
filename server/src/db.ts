@@ -34,8 +34,7 @@ const db = {
             const [rows] = await pool.query<RowDataPacket[]>('SELECT 1 + 1 as result');
             return rows[0].result === 2 ? 'Database Connection OK' : 'Database Connection Failed'
         } catch (error) {
-            console.log(error);
-            return false
+            throw error
         }
     },
     query: async (query: string, values: any[]) => {
