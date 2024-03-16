@@ -37,7 +37,7 @@ const db = {
             throw error
         }
     },
-    query: async (query: string, values: any[]) => {
+    query: async (query: string, values: any[] = []) => {
         try {
             const [rows] = await pool.query<RowDataPacket[]>(query, values);
             return format(rows, queryType(query))

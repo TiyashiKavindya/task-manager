@@ -1,20 +1,19 @@
-import express, { Request, Response } from "express"
+import express from "express"
+import bodyParser from "body-parser"
+import cors from "cors"
 import db from "./db"
+import tag from "./routes/tag"
+import task from "./routes/task"
+import activity from "./routes/activity"
+
 const app = express()
+app.use(cors())
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({ extended: true }))
 
-app.get("/", (req: Request, res: Response) => {
-    db.query("insert into tag values('a', 'te')", ['test6', 'purple'])
-        .then((data) => {
-            console.log(data);
-            res.send(data)
-        })
-        .catch((error) => {
-            // console.log(error);
-            res.status(500).send(error)
-        })
-
-
-})
+app.use('/api/tag', tag)
+app.use('/api/task', task)
+app.use('/api/activity', activity)
 
 app.listen(5400, () => {
     console.log("Server is running on port 5400")
