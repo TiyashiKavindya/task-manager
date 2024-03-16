@@ -1,39 +1,48 @@
 import { BrowserRouter, Route, Routes } from "react-router-dom"
 import Sidebar from "./components/Sidebar"
 import Header from "./components/Header"
-import Container from "./components/Container"
+import Content from "./components/Content"
 import { useEffect, useState } from "react"
+import { PAGE_TITLES } from "./constants"
+import { ROUTES } from "./routes"
+import ContextProvider from "./contexts"
 
 function App() {
-  const [showSidebar, setShowSidebar] = useState(true)
+  const [pageTitle, setPageTitle] = useState<string>(PAGE_TITLES.DASHBOARD)
 
-  const sidebarResize = () => {
-    if (window.innerWidth < 768) {
-      setShowSidebar(false)
-    } else {
-      setShowSidebar(true)
-    }
-  }
 
   useEffect(() => {
-    window.addEventListener('resize', sidebarResize)
-    return () => {
-      window.removeEventListener('resize', sidebarResize)
+    const path = window.location.pathname
+    switch (path) {
+      case '/task':
+        setPageTitle(PAGE_TITLES.TASK)
+        break
+      case '/activity':
+        setPageTitle(PAGE_TITLES.ACTIVITY)
+        break
+      default:
+        setPageTitle(PAGE_TITLES.DASHBOARD)
+        break
     }
   }, [])
 
   return (
     <BrowserRouter>
-      <main className="relative h-screen">
-        <Sidebar showSidebar={showSidebar} />
-        <Container>
-          <Header setShowSidebar={setShowSidebar} showSidebar={showSidebar} />
-          <Routes>
-            <Route path='/about' element={<h1>about</h1>} />
-            <Route path='/contact' element={<h1>contact</h1>} />
-          </Routes>
-        </Container>
-      </main>
+      <ContextProvider>
+        <main className="h-screen flex">
+          <Sidebar />
+          <Content>
+            <Header title={pageTitle} />
+            <Routes>
+              {
+                ROUTES.map((route, index) => (
+                  <Route key={index} path={route.path} element={<route.component />} />
+                ))
+              }
+            </Routes>
+          </Content>
+        </main>
+      </ContextProvider>
     </BrowserRouter>
   )
 }
