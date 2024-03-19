@@ -31,10 +31,6 @@ function Sidebar() {
                         }
 
                     </div>
-                    <div className=" border-t pt-4 mb-4 flex flex-col md:hidden gap-4">
-                        <button className="btn bg-emerald-600 text-white hover:bg-emerald-500"><IoIosAddCircleOutline className="min-w-10" /> Task</button>
-                        <button className="btn bg-sky-600 text-white hover:bg-sky-500"><IoIosAddCircleOutline className="min-w-10" /> Activity</button>
-                    </div>
                 </div>
             </div>
             <div className={`fixed bg-transparent z-[15] md:hidden inset-0 duration-150 ease-out ${showSidebar ? 'block opacity-100 backdrop-blur-[2px] brightness-50' : 'hidden opacity-0'}`}>a</div>
