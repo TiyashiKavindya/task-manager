@@ -6,7 +6,12 @@ const controller = {
         try {
             const result = await db.query('SELECT * FROM tag')
             if (result.success) {
-                res.status(200).send(result.data)
+                res.status(200).send(result.data.map((t: any) => {
+                    return {
+                        value: t.id,
+                        label: t.name,
+                    }
+                }))
             }
         } catch (err) {
             res.status(404).send(err)
