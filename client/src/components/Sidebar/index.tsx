@@ -2,7 +2,6 @@ import { Link } from "react-router-dom"
 import { AiOutlineClose } from "react-icons/ai";
 import { Fragment } from "react/jsx-runtime";
 import { ROUTES } from "../../routes";
-import { IoIosAddCircleOutline } from "react-icons/io";
 import { useAppContext } from "../../contexts";
 
 function Sidebar() {
