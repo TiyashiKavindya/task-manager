@@ -9,7 +9,7 @@ function ActivityPage() {
 
   return (
     <div>
-      <Header title="Task" actionButtonText="Activity" actionButtonClassName="bg-sky-500 text-white hover:bg-sky-600" actionButtonIcon={<IoIosAddCircleOutline />} onActionButtonClick={openModal} />
+      <Header title="Activity" actionButtonText="Activity" actionButtonClassName="bg-sky-500 text-white hover:bg-sky-600" actionButtonIcon={<IoIosAddCircleOutline />} onActionButtonClick={openModal} />
       <Modal title="Add New Activity">
         <AddNewActivityForm />
       </Modal>
