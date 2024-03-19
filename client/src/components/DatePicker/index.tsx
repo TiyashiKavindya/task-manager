@@ -1,4 +1,4 @@
-import React, { InputHTMLAttributes } from 'react'
+import { InputHTMLAttributes } from 'react'
 
 interface DatePickerProps extends InputHTMLAttributes<HTMLInputElement> {
     label: string;

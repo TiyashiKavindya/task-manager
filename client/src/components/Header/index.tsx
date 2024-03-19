@@ -22,7 +22,7 @@ function Header({ title, actionButtonClassName, onActionButtonClick, actionButto
                         </>
                     }
                 </div>
-                <div className="fixed bottom-8 right-8 rounded-full shadow md:shadow-none md:static">
+                <div className="fixed bottom-6 right-6 rounded-full shadow md:shadow-none md:static">
                     <button className={`btn ${actionButtonClassName}`} onClick={onActionButtonClick}>{actionButtonIcon} {actionButtonText}</button>
                 </div>
                 <button onClick={openSidebar} className="md:hidden"><AiOutlineMenu /></button>
