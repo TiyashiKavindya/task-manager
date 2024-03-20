@@ -8,7 +8,7 @@ function Sidebar() {
     const { showSidebar, closeSidebar } = useAppContext()
     return (
         <Fragment>
-            <div className={`fixed z-20 bottom-0 top-0 left-0 md:static w-[275px] duration-200 ease-in-out text-gray-700 bg-white shadow-md pl-6 pr-4 py-4 border-r-2 ${showSidebar ? 'translate-x-0' : 'translate-x-[-100%]'}`}>
+            <div className={`fixed z-20 bottom-0 top-0 left-0 md:static min-w-[250px] w-[250px] duration-200 ease-in-out text-gray-700 bg-white shadow-md pl-6 pr-4 py-4 border-r-2 ${showSidebar ? 'translate-x-0' : 'translate-x-[-100%]'}`}>
                 <div className="flex gap-6 flex-col justify-between h-full">
                     <div className="flex justify-between items-center w-full h-14">
                         <Link to="/" onClick={closeSidebar} className="text-black flex flex-col">

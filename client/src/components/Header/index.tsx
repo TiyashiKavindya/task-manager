@@ -13,7 +13,7 @@ function Header({ title, actionButtonClassName, onActionButtonClick, actionButto
     const { openSidebar } = useAppContext()
 
     return (
-        <div className="sticky top-0 left-0 right-0 h-14">
+        <div className="mt-6 h-10">
             <div className="flex h-full justify-between items-center">
                 <div>
                     {

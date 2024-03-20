@@ -13,12 +13,12 @@ const pool = mysql2.createPool({
 
 
 const format = (out: any, queryType: QueryType) => {
-    if (Array.isArray(out) && out.length === 1) {
-        if (queryType === SQL.SELECT) {
-            return { success: true, data: out[0] }
-        }
-        return { success: out[0].affectedRows > 0, data: out[0] }
-    }
+    // if (Array.isArray(out) && out.length === 1) {
+    //     if (queryType === SQL.SELECT) {
+    //         return { success: true, data: out[0] }
+    //     }
+    //     return { success: out[0].affectedRows > 0, data: out[0] }
+    // }
     if (queryType === SQL.SELECT) {
         return { success: true, data: out }
     }

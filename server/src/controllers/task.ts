@@ -26,12 +26,15 @@ const controller = {
     },
     add: async (req: Request, res: Response) => {
         try {
-            const { name, description, status, tagId } = req.body
-            const result = await db.query('INSERT INTO task (name, description, status, tagId) VALUES (?, ?, ?, ?)', [name, description, status, tagId])
+            const { name, content, status_id, start_date, end_date } = req.body
+            console.log(req.body);
+
+            const result = await db.query('INSERT INTO task (name, content, status_id, start_date, end_date) VALUES (?, ?, ?, ?, ?)', [name, content, parseInt(status_id), new Date(start_date), new Date(end_date)])
             if (result.success) {
-                res.status(201).send('Task added')
+                res.status(201).send(result)
             }
         } catch (err) {
+            console.log(err);
             res.status(404).send(err)
         }
     },
