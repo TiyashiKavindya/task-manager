@@ -1,6 +1,7 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useContext, useEffect, useState } from "react"
 import { createContext } from "react";
+import { TOAST_TIMEOUT } from "../constants";
 
 
 type ContextProviderProps = {
@@ -54,6 +55,17 @@ function ContextProvider({ children }: ContextProviderProps) {
         setIsLoading(false)
     }
 
+    const [showToast, setShowToast] = useState<boolean>(false)
+    const [toastMsg, setToastMsg] = useState({ title: '', message: '', type: '' })
+    const toast = {
+        success: (title: string, message: string = '') => {
+            setShowToast(true)
+            setToastMsg({ title, message, type: 'success' })
+            setTimeout(() => setShowToast(false), TOAST_TIMEOUT)
+            setTimeout(() => setToastMsg({ title: '', message: '', type: '' }), TOAST_TIMEOUT + 300)
+        }
+    }
+
     return (
         <Context.Provider value={{
             showSidebar,
@@ -65,7 +77,10 @@ function ContextProvider({ children }: ContextProviderProps) {
             isLoading,
             loading,
             stopLoading,
-            error
+            error,
+            showToast,
+            toastMsg,
+            toast
         }}>
             {children}
         </Context.Provider>

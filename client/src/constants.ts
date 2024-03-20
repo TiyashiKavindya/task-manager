@@ -1,5 +1,7 @@
 export const API_BASE_URL = `http://localhost:5400/api`
 
+export const TOAST_TIMEOUT = 3000
+
 export const PAGE_TITLES = {
     DASHBOARD: 'Dashboard',
     TASK: 'Tasks',

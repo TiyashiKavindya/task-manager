@@ -11,7 +11,7 @@ import Card from "../../components/Card";
 import { MdAdd } from "react-icons/md";
 
 function TaskPage() {
-  const { openModal, loading, stopLoading } = useAppContext()
+  const { openModal, loading, stopLoading, toast } = useAppContext()
 
   const [tasks, setTasks] = useState([])
 
@@ -30,6 +30,7 @@ function TaskPage() {
     try {
       await deleteTaskById(id)
       getAllTask()
+      toast.success('Task deleted successfully', 'Lorem ipsum dolor, sit amet consectetur.')
     } catch (err) {
       console.log(err);
     }
