@@ -1,3 +1,4 @@
+/* eslint-disable react-refresh/only-export-components */
 import { useContext, useEffect, useState } from "react"
 import { createContext } from "react";
 
@@ -6,14 +7,7 @@ type ContextProviderProps = {
     children: React.ReactNode
 }
 
-export const Context = createContext({
-    showSidebar: true,
-    openSidebar: () => { },
-    closeSidebar: () => { },
-    showModal: false,
-    openModal: () => { },
-    closeModal: () => { }
-});
+export const Context = createContext<any>({});
 
 export const useAppContext = () => {
     const store = useContext(Context)
@@ -24,6 +18,7 @@ export const useAppContext = () => {
 }
 
 function ContextProvider({ children }: ContextProviderProps) {
+
     const [showSidebar, setShowSidebar] = useState<boolean>(window.innerWidth > 768)
     const openSidebar = () => {
         if (window.innerWidth < 768) setShowSidebar(true)
@@ -49,6 +44,16 @@ function ContextProvider({ children }: ContextProviderProps) {
     const openModal = () => setShowModal(true)
     const closeModal = () => setShowModal(false)
 
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const [error, setError] = useState<string>('')
+    const loading = () => setIsLoading(true)
+    const stopLoading = (err: any = null) => {
+        if (err) {
+            setError(err.message)
+        }
+        setIsLoading(false)
+    }
+
     return (
         <Context.Provider value={{
             showSidebar,
@@ -56,7 +61,11 @@ function ContextProvider({ children }: ContextProviderProps) {
             closeSidebar,
             showModal,
             openModal,
-            closeModal
+            closeModal,
+            isLoading,
+            loading,
+            stopLoading,
+            error
         }}>
             {children}
         </Context.Provider>

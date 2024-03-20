@@ -41,21 +41,25 @@ function MultiSelect({ label, className, value, onChange, options }: MultipleSel
                 onClick={() => setIsOpen(prev => !prev)}
                 className='relative z-0 w-full h-10 border flex items-center gap-2 rounded-lg outline-none px-2'
             >
-                <span className='flex-grow flex gap-1 flex-wrap'>
-                    {value.map(v => (
-                        <button
-                            key={v.value}
-                            onClick={e => {
-                                e.stopPropagation()
-                                selectOption(v)
-                            }}
-                            className='flex items-center gap-1 border rounded-full px-2 py-1 text-sm cursor-pointer bg-none outline-none'
-                        >
-                            {v.label}
-                            <span className={"remove-btn"}>&times;</span>
-                        </button>
-                    ))}
-                </span>
+                {
+                    value && <>
+                        <span className='flex-grow flex gap-1 flex-wrap'>
+                            {value.map(v => (
+                                <button
+                                    key={v.value}
+                                    onClick={e => {
+                                        e.stopPropagation()
+                                        selectOption(v)
+                                    }}
+                                    className='flex items-center gap-1 border rounded-full px-2 py-1 text-sm cursor-pointer bg-none outline-none'
+                                >
+                                    {v.label}
+                                    <span className={"remove-btn"}>&times;</span>
+                                </button>
+                            ))}
+                        </span>
+                    </>
+                }
                 <button
                     onClick={e => {
                         e.stopPropagation()
