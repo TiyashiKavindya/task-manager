@@ -29,7 +29,7 @@ function TaskPage() {
     try {
       await deleteTaskById(id)
       refetch()
-      toast.success('Task deleted successfully', 'Lorem ipsum dolor, sit amet consectetur.')
+      toast('Task deleted successfully', 'Lorem ipsum dolor, sit amet consectetur.')
     } catch (err) {
       console.log(err);
     }
@@ -65,7 +65,7 @@ function TaskPage() {
                   deleteTask(id)
                 }} />
             ))}
-            <button onClick={() => openModal(MODAL_NAMES.ADD_TASK)} type="button" className=" h-64 p-4 rounded-lg border-2 border-gray-300 border-dashed flex justify-center items-center gap-4 cursor-pointer hover:bg-white duration-300 ease-in-out">
+            <button onClick={() => openModal(MODAL_NAMES.ADD_TASK)} type="button" className=" h-80 p-4 rounded-lg border-2 border-gray-300 border-dashed flex justify-center items-center gap-4 cursor-pointer hover:bg-white duration-300 ease-in-out">
               <MdAdd className="text-3xl" />
               <p className="">Add New Task</p>
             </button>

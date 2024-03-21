@@ -3,9 +3,9 @@ import controller from '../controllers/task'
 
 const router = express.Router()
 
-router.get('/', controller.getAll)
-router.get('/:id', controller.getOne)
-router.post('/', controller.add)
+router.get('/', controller.selectAll)
+router.get('/:id', controller.selectById)
+router.post('/', controller.create)
 router.put('/:id', controller.update)
 router.delete('/:id', controller.delete)
 

@@ -36,14 +36,14 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
         try {
             const res = await saveTasks({ ...formData, tags })
             if (res.data.success) {
-                toast.success('Task Created', 'Task saved successfully')
+                toast('Task Created', 'Task saved successfully')
                 refetch()
             } else {
-                toast.error('Task Failed', 'Task creation failed')
+                toast('Task Failed', 'Task creation failed')
             }
         } catch (err: any) {
             console.log(err)
-            toast.error('Task Failed', err.message as string)
+            toast('Task Failed', err.message as string)
         } finally {
             closeModal()
         }

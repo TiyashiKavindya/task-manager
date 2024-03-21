@@ -1,21 +1,30 @@
 import { Request, Response } from "express"
-import db from "../db"
+import Task from "../models/task"
+import TaskTag from "../models/TaskTag"
+import Tag from "../models/tag"
+import Status from "../models/status"
 
 const controller = {
-    getAll: async (req: Request, res: Response) => {
+    selectAll: async (req: Request, res: Response) => {
         try {
-            const result = await db.query('SELECT * FROM task')
+            const result = await Task.selectAll()
             if (result.success) {
-                res.status(200).send(result.data)
+                const tasks = []
+                for (let task of result.data) {
+                    const tags = await Tag.selectByTaskId(task.id)
+                    const status = await Status.selectById(task.status_id)
+                    tasks.push({ ...task, tags: tags.data, status: status.data[0] })
+                }
+                res.status(200).send(tasks)
             }
         } catch (err) {
             res.status(404).send(err)
         }
     },
-    getOne: async (req: Request, res: Response) => {
+    selectById: async (req: Request, res: Response) => {
         try {
             const id = req.params.id
-            const result = await db.query('SELECT * FROM task WHERE id = ?', [id])
+            const result = await Task.selectById(parseInt(id))
             if (result.success) {
                 res.status(200).send(result.data)
             }
@@ -24,13 +33,14 @@ const controller = {
         }
 
     },
-    add: async (req: Request, res: Response) => {
+    create: async (req: Request, res: Response) => {
         try {
-            const { name, content, status_id, start_date, end_date } = req.body
-            console.log(req.body);
-
-            const result = await db.query('INSERT INTO task (name, content, status_id, start_date, end_date) VALUES (?, ?, ?, ?, ?)', [name, content, parseInt(status_id), new Date(start_date), new Date(end_date)])
+            const { name, content, status_id, start_date, end_date, tags } = req.body
+            const result = await Task.create([name, content, parseInt(status_id), new Date(start_date), new Date(end_date)])
             if (result.success) {
+                tags.forEach(async (tag_id: number) => {
+                    await TaskTag.create([result.data.insertId, tag_id])
+                })
                 res.status(201).send(result)
             }
         } catch (err) {
@@ -41,8 +51,8 @@ const controller = {
     update: async (req: Request, res: Response) => {
         try {
             const id = req.params.id
-            const { name, description, status, tagId } = req.body
-            const result = await db.query('UPDATE task SET name = ?, description = ?, status = ?, tagId = ? WHERE id = ?', [name, description, status, tagId, id])
+            const { name, content, status_id, start_date, end_date } = req.body
+            const result = await Task.update(parseInt(id), [name, content, parseInt(status_id), new Date(start_date), new Date(end_date)])
             if (result.success) {
                 res.status(200).send('Task updated')
             }
@@ -53,7 +63,7 @@ const controller = {
     delete: async (req: Request, res: Response) => {
         try {
             const id = req.params.id
-            const result = await db.query('DELETE FROM task WHERE id = ?', [id])
+            const result = await Task.delete(parseInt(id))
             if (result.success) {
                 res.status(200).send('Task deleted')
             }

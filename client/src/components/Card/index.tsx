@@ -13,17 +13,24 @@ const getDate = (date: string) => {
 
 function Card({ data, handleEditAction, onDeleteAction }: CardProps) {
     return (
-        <div className="bg-white h-64 p-4 rounded-lg border-2 flex flex-col justify-between gap-3">
-            <div className="flex-grow">
+        <div className="bg-white h-80 p-4 rounded-lg border-2 flex flex-col justify-between gap-3">
+            <div className="">
                 <h1 className="text-lg font-bold">{data.name}</h1>
-                <p className="text-sm line-clamp-6 text-ellipsis text-gray-500">{data.content}</p>
+                <p className="text-sm text-gray-500">{getDate(data.end_date)} to {getDate(data.start_date)}</p>
             </div>
-            <div className="mt-4">
-                <span className="px-2 py-1 text-xs">Start Date: {getDate(data.start_date)}</span>
-                <span className="px-2 py-1 text-xs ml-2">Due Date: {getDate(data.end_date)}</span>
+            <div className="flex-grow overflow-y-auto no-scrollbar">
+                <p className="text-sm text-ellipsis text-gray-500">{data.content} </p>
+            </div>
+            <div className="flex flex-wrap gap-1">
+                {
+                    data.tags ?
+                        data.tags.map((tag: any) => (
+                            <span key={tag.id} className="bg-gray-100 p-1 rounded-lg text-xs">{tag.name}</span>
+                        )) : <></>
+                }
             </div>
             <div className="flex justify-between items-center">
-                <button>{data.status_id}</button>
+                <button>{data.status.title}</button>
                 <div className="flex gap-2 items-center">
                     <button onClick={handleEditAction} className="p-2 hover:bg-teal-500 hover:text-white duration-300 ease-in-out rounded-full"><AiOutlineEdit className="text-xl" /></button>
                     <button onClick={() => onDeleteAction(data.id)} className="p-2 hover:bg-rose-500 hover:text-white duration-300 ease-in-out rounded-full"><AiOutlineDelete className="text-xl" /></button>

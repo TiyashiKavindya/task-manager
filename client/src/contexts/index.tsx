@@ -65,20 +65,15 @@ function ContextProvider({ children }: ContextProviderProps) {
     }
 
     const [showToast, setShowToast] = useState<boolean>(false)
-    const [toastMsg, setToastMsg] = useState({ title: '', message: '', type: '' })
-    const toast = {
-        success: (title: string, message: string = '') => {
-            setShowToast(true)
-            setToastMsg({ title, message, type: 'success' })
-            setTimeout(() => setShowToast(false), TOAST_TIMEOUT)
-            setTimeout(() => setToastMsg({ title: '', message: '', type: '' }), TOAST_TIMEOUT + 300)
-        },
-        error: (title: string, message: string = '') => {
-            setShowToast(true)
-            setToastMsg({ title, message, type: 'error' })
-            setTimeout(() => setShowToast(false), TOAST_TIMEOUT)
-            setTimeout(() => setToastMsg({ title: '', message: '', type: '' }), TOAST_TIMEOUT + 300)
-        }
+    const [toastMsg, setToastMsg] = useState({ title: '', message: '' })
+    const hideToast = () => {
+        setTimeout(() => setShowToast(false), TOAST_TIMEOUT)
+        setTimeout(() => setToastMsg({ title: '', message: '' }), TOAST_TIMEOUT + 300)
+    }
+    const toast = (title: string, message: string = '') => {
+        setShowToast(true)
+        setToastMsg({ title, message })
+        hideToast()
     }
 
     return (
