@@ -13,7 +13,7 @@ import { MODAL_NAMES } from "../../constants";
 import EditTaskForm from "./EditTaskForm";
 
 function TaskPage() {
-  const { openModal, loading, stopLoading, toast } = useAppContext()
+  const { openModal, loading, stopLoading, toast, confirm } = useAppContext()
 
   const [tasks, setTasks] = useState([])
   const [taskToEdit, setTaskToEdit] = useState<any>(null)
@@ -31,9 +31,10 @@ function TaskPage() {
     try {
       await deleteTaskById(id)
       refetch()
-      toast('Task deleted successfully', 'Lorem ipsum dolor, sit amet consectetur.')
+      toast('Task deleted', 'Task deleted successfully.')
     } catch (err) {
       console.log(err);
+      toast('Delete Failed', 'Failed to delete task.')
     }
   }
 
@@ -67,7 +68,12 @@ function TaskPage() {
               <Card
                 key={task.id} data={task}
                 onDeleteAction={() => {
-                  deleteTask(task.id)
+                  confirm(
+                    'Are you sure you want to delete this task?',
+                    'This action cannot be undone.',
+                    'Yes', () => deleteTask(task.id),
+                    'No'
+                  )
                 }}
                 onEditAction={() => {
                   setTaskToEdit(task)

@@ -76,6 +76,13 @@ function ContextProvider({ children }: ContextProviderProps) {
         hideToast()
     }
 
+    const [confirmAlert, setConfirmAlert] = useState<any>({ show: false, title: '', message: '', okText: 'Ok', onOk: () => { }, cancelText: 'Cancel', onCencel: () => { } })
+    const confirm = (title: string, message: string, okText: string = 'Ok', onOk: () => void, cancelText: string = "Cancel", onCencel?: () => void) => {
+        setConfirmAlert({ show: true, title, message, okText, onOk, cancelText, onCencel })
+    }
+    const hideConfirm = () => {
+        setConfirmAlert({ show: false, title: '', message: '', okText: 'Ok', onOk: () => { }, cancelText: 'Cancel', onCencel: () => { } })
+    }
     return (
         <Context.Provider value={{
             showSidebar,
@@ -90,7 +97,10 @@ function ContextProvider({ children }: ContextProviderProps) {
             error,
             showToast,
             toastMsg,
-            toast
+            toast,
+            confirmAlert,
+            confirm,
+            hideConfirm
         }}>
             {children}
         </Context.Provider>

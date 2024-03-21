@@ -17,7 +17,6 @@ function Modal({ name, children, title, className }: ModalProps) {
                 <p className='text-lg font-semibold mb-2'>{title}</p>
                 {children}
             </div>
-
         </dialog>
     )
 }

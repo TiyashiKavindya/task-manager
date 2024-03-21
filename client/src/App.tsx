@@ -3,7 +3,8 @@ import Sidebar from "./components/Sidebar"
 import Content from "./components/Content"
 import { ROUTES } from "./routes"
 import ContextProvider from "./contexts"
-import Toast from "./Toast"
+import Toast from "./components/Toast"
+import Confirm from "./components/Confirm"
 
 function App() {
   return (
@@ -20,7 +21,8 @@ function App() {
               }
             </Routes>
           </Content>
-          <Toast/>
+          <Confirm />
+          <Toast />
         </main>
       </ContextProvider>
     </BrowserRouter>
