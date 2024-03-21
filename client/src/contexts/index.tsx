@@ -41,9 +41,18 @@ function ContextProvider({ children }: ContextProviderProps) {
         }
     }, [])
 
-    const [showModal, setShowModal] = useState<boolean>(false)
-    const openModal = () => setShowModal(true)
-    const closeModal = () => setShowModal(false)
+    const [modals, setModals] = useState<any>({})
+    const resetModals = () => {
+        for (const key in modals) modals[key] = false
+    }
+    const openModal = (name: string) => {
+        resetModals()
+        setModals({ ...modals, [name]: true })
+    }
+    const closeModal = () => {
+        resetModals()
+        setModals({ ...modals })
+    }
 
     const [isLoading, setIsLoading] = useState<boolean>(false)
     const [error, setError] = useState<string>('')
@@ -63,6 +72,12 @@ function ContextProvider({ children }: ContextProviderProps) {
             setToastMsg({ title, message, type: 'success' })
             setTimeout(() => setShowToast(false), TOAST_TIMEOUT)
             setTimeout(() => setToastMsg({ title: '', message: '', type: '' }), TOAST_TIMEOUT + 300)
+        },
+        error: (title: string, message: string = '') => {
+            setShowToast(true)
+            setToastMsg({ title, message, type: 'error' })
+            setTimeout(() => setShowToast(false), TOAST_TIMEOUT)
+            setTimeout(() => setToastMsg({ title: '', message: '', type: '' }), TOAST_TIMEOUT + 300)
         }
     }
 
@@ -71,7 +86,7 @@ function ContextProvider({ children }: ContextProviderProps) {
             showSidebar,
             openSidebar,
             closeSidebar,
-            showModal,
+            modals,
             openModal,
             closeModal,
             isLoading,

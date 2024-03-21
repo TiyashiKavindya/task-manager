@@ -9,21 +9,23 @@ import { useAppContext } from "../../contexts"
 import { SelectOption } from "../../types"
 import { getSelectOptions, saveTasks } from "../../api"
 
-function AddNewTaskForm() {
-    const { closeModal, loading, stopLoading } = useAppContext()
+type AddNewTaskFormProps = {
+    refetch: () => void
+}
+
+function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
+    const { closeModal, toast } = useAppContext()
     const [tags, setTags] = useState<SelectOption[]>([])
     const [statuses, setstatuses] = useState<SelectOption[]>([])
     const [multiSelectValue, setMultiSelectValue] = useState<SelectOption[]>([])
 
     const getFormDefaultValues = async () => {
-        loading()
         try {
             const res = await getSelectOptions()
             setTags(res.tags)
             setstatuses(res.statuses)
-            stopLoading()
         } catch (err) {
-            stopLoading(err)
+            console.log(err)
         }
     }
 
@@ -33,11 +35,18 @@ function AddNewTaskForm() {
         const tags = multiSelectValue.map(o => o.value)
         try {
             const res = await saveTasks({ ...formData, tags })
-            console.log(res.data);
-        } catch (err) {
+            if (res.data.success) {
+                toast.success('Task Created', 'Task saved successfully')
+                refetch()
+            } else {
+                toast.error('Task Failed', 'Task creation failed')
+            }
+        } catch (err: any) {
             console.log(err)
+            toast.error('Task Failed', err.message as string)
+        } finally {
+            closeModal()
         }
-        // closeModal()
     }
 
     useEffect(() => {

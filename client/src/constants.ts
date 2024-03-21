@@ -15,3 +15,9 @@ export const AXIOS_METHODS = {
     DELETE: 'delete',
     patch: 'patch',
 }
+
+export const MODAL_NAMES = {
+    ADD_TASK: 'add-task-from',
+    ADD_ACTIVITY: 'add-activity-form',
+    TEST: 'test-modal',
+}
