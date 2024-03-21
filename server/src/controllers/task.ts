@@ -51,8 +51,8 @@ const controller = {
     update: async (req: Request, res: Response) => {
         try {
             const id = req.params.id
-            const { name, content, status_id, start_date, end_date } = req.body
-            const result = await Task.update(parseInt(id), [name, content, status_id, new Date(start_date), new Date(end_date)])
+            const { name, content, start_date, end_date } = req.body
+            const result = await Task.update(parseInt(id), [name, content, new Date(start_date), new Date(end_date)])
             if (result.success) {
                 res.status(200).send(result)
             }
