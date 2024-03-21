@@ -28,3 +28,7 @@ export const getStatus = async () => {
 export const updateStatus = async (id: number, status: number | string) => {
     return await axios.patch(`/task/update_status/${id}`, { status })
 }
+
+export const updateTasks = async (id: number, data: any) => {
+    return await axios.patch(`/task/${id}`, data)
+}

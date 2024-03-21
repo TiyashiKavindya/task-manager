@@ -18,6 +18,7 @@ export const AXIOS_METHODS = {
 
 export const MODAL_NAMES = {
     ADD_TASK: 'add-task-from',
+    EDIT_TASK: 'edit-task-form',
     ADD_ACTIVITY: 'add-activity-form',
     TEST: 'test-modal',
 }

@@ -10,11 +10,13 @@ import Scrollable from "../../components/Scrollable";
 import Card from "../../components/Card";
 import { MdAdd } from "react-icons/md";
 import { MODAL_NAMES } from "../../constants";
+import EditTaskForm from "./EditTaskForm";
 
 function TaskPage() {
   const { openModal, loading, stopLoading, toast } = useAppContext()
 
   const [tasks, setTasks] = useState([])
+  const [taskToEdit, setTaskToEdit] = useState<any>(null)
 
   const refetch = async () => {
     try {
@@ -55,14 +57,22 @@ function TaskPage() {
       <Modal name={MODAL_NAMES.ADD_TASK} title="Add New Task">
         <AddNewTaskForm refetch={refetch} />
       </Modal>
+      <Modal name={MODAL_NAMES.EDIT_TASK} title="Edit Task">
+        <EditTaskForm defaultValues={taskToEdit} refetch={refetch} />
+      </Modal>
       <Scrollable>
         <Loading>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {tasks.map((task: any) => (
               <Card
                 key={task.id} data={task}
-                onDeleteAction={(id: number) => {
-                  deleteTask(id)
+                onDeleteAction={() => {
+                  deleteTask(task.id)
+                }}
+                onEditAction={() => {
+                  setTaskToEdit(task)
+                  openModal(MODAL_NAMES.EDIT_TASK)
+
                 }}
                 refetch={refetch}
               />

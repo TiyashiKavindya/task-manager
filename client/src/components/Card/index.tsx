@@ -8,17 +8,17 @@ import { useAppContext } from "../../contexts";
 
 type CardProps = {
     data: any
-    handleEditAction?: () => void
+    onEditAction: (id: number) => void
     onDeleteAction: (id: number) => void
     refetch?: () => void
 }
 
 const getDate = (date: string) => {
     const d = new Date(date)
-    return d.toISOString().split('T')[0]
+    return d.toLocaleDateString()
 }
 
-function Card({ data, handleEditAction, onDeleteAction, refetch }: CardProps) {
+function Card({ data, onEditAction, onDeleteAction, refetch }: CardProps) {
     const { toast } = useAppContext()
     const [statusSelectOptions, setStatusSelectOptions] = useState<SelectOption[]>([])
 
@@ -57,7 +57,7 @@ function Card({ data, handleEditAction, onDeleteAction, refetch }: CardProps) {
         <div className="bg-white h-80 p-4 rounded-lg border flex flex-col justify-between gap-3" style={{ borderColor: data.status.style }}>
             <div className="">
                 <h1 className="text-lg font-bold">{data.name}</h1>
-                <p className="text-sm text-gray-500">{getDate(data.end_date)} to {getDate(data.start_date)}</p>
+                <p className="text-sm text-gray-500">{getDate(data.start_date)} to {getDate(data.end_date)}</p>
             </div>
             <div className="flex flex-wrap gap-2">
                 {
@@ -72,7 +72,7 @@ function Card({ data, handleEditAction, onDeleteAction, refetch }: CardProps) {
                     <div className="px-3 py-2 rounded-md text-white" style={{ backgroundColor: data.status.style }}>{data.status.title}</div>
                 </DropDown>
                 <div className="flex gap-2 items-center">
-                    <button onClick={handleEditAction} className="p-2 hover:bg-teal-500 hover:text-white duration-300 ease-in-out rounded-full"><AiOutlineEdit className="text-xl" /></button>
+                    <button onClick={() => onEditAction(data.id)} className="p-2 hover:bg-teal-500 hover:text-white duration-300 ease-in-out rounded-full"><AiOutlineEdit className="text-xl" /></button>
                     <button onClick={() => onDeleteAction(data.id)} className="p-2 hover:bg-rose-500 hover:text-white duration-300 ease-in-out rounded-full"><AiOutlineDelete className="text-xl" /></button>
                 </div>
             </div>

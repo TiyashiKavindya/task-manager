@@ -21,7 +21,6 @@ function MultiSelect({ label, className, value, onChange, options }: MultipleSel
     }
 
     function selectOption(option: SelectOption) {
-
         if (value.includes(option)) {
             onChange(value.filter(o => o !== option))
         } else {
