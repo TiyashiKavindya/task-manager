@@ -70,6 +70,18 @@ const controller = {
         } catch (err) {
             res.status(404).send(err)
         }
+    },
+    updateStatus: async (req: Request, res: Response) => {
+        try {
+            const id = req.params.id
+            const status = req.body.status
+            const result = await Task.updateStatus(parseInt(id), parseInt(status))
+            if (result.success) {
+                res.status(200).send(result)
+            }
+        } catch (err) {
+            res.status(404).send(err)
+        }
     }
 }
 

@@ -1,17 +1,13 @@
 import { Request, Response } from 'express'
 import db from '../db'
+import Tag from '../models/tag'
 
 const controller = {
     getAll: async (req: Request, res: Response) => {
         try {
-            const result = await db.query('SELECT * FROM tag')
+            const result = await Tag.SelectAll()
             if (result.success) {
-                res.status(200).send(result.data.map((t: any) => {
-                    return {
-                        value: t.id,
-                        label: t.name,
-                    }
-                }))
+                res.status(200).send(result.data)
             }
         } catch (err) {
             res.status(404).send(err)

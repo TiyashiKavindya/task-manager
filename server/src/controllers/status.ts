@@ -1,17 +1,13 @@
 import { Request, Response } from 'express'
 import db from '../db'
+import Status from '../models/status'
 
 const controller = {
     getAll: async (req: Request, res: Response) => {
         try {
-            const result = await db.query('SELECT * FROM status')
+            const result = await Status.selectAll()
             if (result.success) {
-                res.status(200).send(result.data.map((t: any) => {
-                    return {
-                        value: t.id,
-                        label: t.title,
-                    }
-                }))
+                res.status(200).send(result.data)
             }
         } catch (err) {
             res.status(404).send(err)

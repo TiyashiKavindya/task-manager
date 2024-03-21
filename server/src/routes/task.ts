@@ -6,6 +6,7 @@ const router = express.Router()
 router.get('/', controller.selectAll)
 router.get('/:id', controller.selectById)
 router.post('/', controller.create)
+router.patch('/update_status/:id', controller.updateStatus)
 router.put('/:id', controller.update)
 router.delete('/:id', controller.delete)
 

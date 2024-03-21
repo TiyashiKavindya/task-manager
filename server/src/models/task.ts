@@ -15,6 +15,9 @@ const Task = {
     },
     delete: async (id: number) => {
         return db.query('DELETE FROM task WHERE id = ?', [id])
+    },
+    updateStatus: async (id: number, status: number | string) => {
+        return db.query('UPDATE task SET status_id = ? WHERE id = ?', [status, id])
     }
 }
 

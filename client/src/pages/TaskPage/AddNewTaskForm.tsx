@@ -22,8 +22,8 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
     const getFormDefaultValues = async () => {
         try {
             const res = await getSelectOptions()
-            setTags(res.tags)
-            setstatuses(res.statuses)
+            setTags(res.tags.map((tag: any) => ({ label: tag.name, value: tag.id })) as SelectOption[])
+            setstatuses(res.statuses.map((status: any) => ({ label: status.title, value: status.id })) as SelectOption[])
         } catch (err) {
             console.log(err)
         }

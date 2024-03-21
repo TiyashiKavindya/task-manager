@@ -20,3 +20,11 @@ export const getTasks = async () => {
 export const deleteTaskById = async (id: number) => {
     return await axios.delete(`/task/${id}`)
 }
+
+export const getStatus = async () => {
+    return await axios.get('/status')
+}
+
+export const updateStatus = async (id: number, status: number | string) => {
+    return await axios.patch(`/task/update_status/${id}`, { status })
+}
