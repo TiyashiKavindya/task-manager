@@ -3,7 +3,7 @@ import Modal from "../../components/Modal"
 import AddNewTaskForm from "./AddNewTaskForm"
 import { IoIosAddCircleOutline } from "react-icons/io";
 import Header from "../../components/Header";
-import { deleteTaskById, getTasks } from "../../api";
+import { deleteTaskById, getStatus, getTasks } from "../../api";
 import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import Scrollable from "../../components/Scrollable";
@@ -16,7 +16,10 @@ function TaskPage() {
   const { openModal, loading, stopLoading, toast, confirm } = useAppContext()
 
   const [tasks, setTasks] = useState([])
-  const [taskToEdit, setTaskToEdit] = useState<any>(null)
+  const [filterdTasks, setFilterdTasks] = useState([])
+  const [taskToEdit, setTaskToEdit] = useState(null)
+  const [statusList, setStatusList] = useState([])
+  const [activeFilter, setActiveFilter] = useState('All')
 
   const refetch = async () => {
     try {
@@ -38,6 +41,16 @@ function TaskPage() {
     }
   }
 
+  const getStatusList = async () => {
+    try {
+      const res = await getStatus()
+      console.log(res.data);
+      setStatusList(res.data)
+    } catch (err) {
+      console.log(err);
+    }
+  }
+
   useEffect(() => {
     const getAllTask = async () => {
       try {
@@ -50,7 +63,17 @@ function TaskPage() {
       }
     }
     getAllTask()
+    getStatusList()
   }, [])
+
+  useEffect(() => {
+    if (activeFilter === 'All') {
+      setFilterdTasks(tasks)
+    } else {
+      const filteredTasks = tasks.filter((task: any) => task.status.title === activeFilter)
+      setFilterdTasks(filteredTasks)
+    }
+  }, [activeFilter, tasks])
 
   return (
     <>
@@ -61,10 +84,24 @@ function TaskPage() {
       <Modal name={MODAL_NAMES.EDIT_TASK} title="Edit Task">
         <EditTaskForm defaultValues={taskToEdit} refetch={refetch} />
       </Modal>
+      <div className="flex border-b min-h-10 gap-6 max-w-[250px] md:max-w-[600px] lg:max-w-[1000px] xl:max-w-[1200px] overflow-x-scroll no-scrollbar">
+        <button
+          className={`mix-blend-normal border-b-2 pb-3 hover:text-emerald-500 hover:border-emerald-500 duration-300 ease-in-out text-nowrap ${activeFilter === 'All' ? 'text-emerald-500 border-emerald-500' : 'border-transparent'}`}
+          onClick={() => setActiveFilter('All')}
+        >All</button>
+        {
+          statusList.length > 0 && statusList.map((status: any) => (
+            <button key={status.id}
+              className={`mix-blend-normal border-b-2 pb-3 hover:text-emerald-500 hover:border-emerald-500 duration-300 ease-in-out text-nowrap ${activeFilter === status.title ? 'text-emerald-500 border-emerald-500' : 'border-transparent'}`}
+              onClick={() => setActiveFilter(status.title)}
+            >{status.title}</button>
+          ))
+        }
+      </div >
       <Scrollable>
         <Loading>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-            {tasks.map((task: any) => (
+            {filterdTasks.map((task: any) => (
               <Card
                 key={task.id} data={task}
                 onDeleteAction={() => {
