@@ -1,13 +1,14 @@
 import { FormEvent, useEffect, useState } from "react"
 import DatePicker from "../../components/DatePicker"
 import InputField from "../../components/InputField"
-import MultiSelect from "../../components/MultiSelect"
-import Select from "../../components/Select"
 import TextArea from "../../components/TextArea"
 import Loading from "../../components/Loading"
 import { useAppContext } from "../../contexts"
 import { SelectOption } from "../../types"
 import { getSelectOptions, saveTasks } from "../../api"
+import RMSelect from 'react-select'
+import { MultiValue } from 'react-select'
+
 
 type AddNewTaskFormProps = {
     refetch: () => void
@@ -17,7 +18,7 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
     const { closeModal, toast } = useAppContext()
     const [tags, setTags] = useState<SelectOption[]>([])
     const [statuses, setstatuses] = useState<SelectOption[]>([])
-    const [multiSelectValue, setMultiSelectValue] = useState<SelectOption[]>([])
+    const [multiSelectValue, setMultiSelectValue] = useState<MultiValue<SelectOption>>([])
 
     const getFormDefaultValues = async () => {
         try {
@@ -46,6 +47,7 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
             toast('Task Failed', err.message as string)
         } finally {
             closeModal()
+            setMultiSelectValue([])
         }
     }
 
@@ -59,10 +61,27 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
                 <form onSubmit={handleSave}>
                     <div className="flex gap-2">
                         <InputField label="Title" placeholder="Enter the title of the task" name="name" />
-                        <Select className="w-28 text-sm md:text-base md:w-36" label="Status" name="status_id" options={statuses} />
+                        <div className="w-36">
+                            <label>Status</label>
+                            <RMSelect
+                                className="mt-1 w-full"
+                                name="status_id"
+                                options={statuses}
+                                defaultValue={statuses[0]}
+                            />
+                        </div>
                     </div>
                     <TextArea label="Description" name="content" placeholder="Enter a detailed description" />
-                    <MultiSelect className="mb-3" label="Tags" value={multiSelectValue} onChange={o => setMultiSelectValue(o)} options={tags} />
+                    <div className="mb-3">
+                        <label>Tags</label>
+                        <RMSelect
+                            className="mt-1"
+                            name="tags"
+                            isMulti
+                            options={tags}
+                            onChange={(selected: MultiValue<SelectOption>) => setMultiSelectValue(selected)}
+                        />
+                    </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                         <DatePicker name="start_date" label="Start Date" />
                         <DatePicker name="end_date" label="Due Date" />
