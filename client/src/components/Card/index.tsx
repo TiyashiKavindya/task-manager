@@ -5,17 +5,13 @@ import { useEffect, useState } from "react";
 import { getStatus, updateStatus } from "../../api";
 import DropDown from "../DropDown";
 import { useAppContext } from "../../contexts";
+import { convertDateFormat } from "../../utils";
 
 type CardProps = {
     data: any
     onEditAction: (id: number) => void
     onDeleteAction: (id: number) => void
     refetch?: () => void
-}
-
-const getDate = (date: string) => {
-    const d = new Date(date)
-    return d.toLocaleDateString()
 }
 
 function Card({ data, onEditAction, onDeleteAction, refetch }: CardProps) {
@@ -57,7 +53,7 @@ function Card({ data, onEditAction, onDeleteAction, refetch }: CardProps) {
         <div className="bg-white h-80 p-4 rounded-lg border flex flex-col justify-between gap-3" style={{ borderColor: data.status.style }}>
             <div className="">
                 <h1 className="text-lg font-bold line-clamp-2 text-ellipsis">{data.name}</h1>
-                <p className="text-sm text-gray-500">{getDate(data.start_date)} to {getDate(data.end_date)}</p>
+                <p className="text-sm text-gray-500">{convertDateFormat(data.start_date, '/')} to {convertDateFormat(data.end_date, '/')}</p>
             </div>
             <div className="flex flex-wrap gap-2">
                 {

@@ -5,15 +5,11 @@ import TextArea from "../../components/TextArea"
 import Loading from "../../components/Loading"
 import { useAppContext } from "../../contexts"
 import { updateTasks } from "../../api"
+import { convertDateFormat } from "../../utils"
 
 type EditTaskFormProps = {
     defaultValues: any
     refetch: () => void
-}
-
-const getDate = (date: string) => {
-    const d = new Date(date)
-    return d.toISOString().split('T')[0]
 }
 
 function EditTaskForm({ defaultValues, refetch }: EditTaskFormProps) {
@@ -46,8 +42,8 @@ function EditTaskForm({ defaultValues, refetch }: EditTaskFormProps) {
                         <InputField label="Title" placeholder="Enter the title of the task" name="name" defaultValue={defaultValues.name} />
                         <TextArea label="Description" name="content" placeholder="Enter a detailed description" defaultValue={defaultValues.content} />
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                            <DatePicker name="start_date" label="Start Date" defaultValue={getDate(defaultValues.start_date)} />
-                            <DatePicker name="end_date" label="Due Date" defaultValue={getDate(defaultValues.end_date)} />
+                            <DatePicker name="start_date" label="Start Date" defaultValue={convertDateFormat(defaultValues.start_date)} />
+                            <DatePicker name="end_date" label="Due Date" defaultValue={convertDateFormat(defaultValues.end_date)} />
                         </div>
                         <div className="mt-4 flex justify-between items-center">
                             <button type="button" onClick={closeModal} className="btn border-2 border-emerald-500 text-emerald-500">Cancel</button>
