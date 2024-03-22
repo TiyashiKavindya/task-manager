@@ -25,6 +25,10 @@ export const getStatus = async () => {
     return await axios.get('/status')
 }
 
+export const getTags = async () => {
+    return await axios.get('/tag')
+}
+
 export const updateStatus = async (id: number, status: number | string) => {
     return await axios.patch(`/task/update_status/${id}`, { status })
 }

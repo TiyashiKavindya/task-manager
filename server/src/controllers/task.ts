@@ -51,11 +51,23 @@ const controller = {
     update: async (req: Request, res: Response) => {
         try {
             const id = req.params.id
-            const { name, content, start_date, end_date } = req.body
+            const { name, content, start_date, end_date, tags } = req.body
             const result = await Task.update(parseInt(id), [name, content, new Date(start_date), new Date(end_date)])
             if (result.success) {
-                res.status(200).send(result)
+                const deleteOld = await TaskTag.deleteByTaskId(parseInt(id))
+                console.log(res);
+                if (deleteOld.success) {
+                    tags.forEach(async (tag_id: number) => {
+                        await TaskTag.create([parseInt(id), tag_id])
+                    })
+                    res.status(200).send(result)
+                } else {
+                    res.status(404).send({ success: false, message: 'Failed to update tags' })
+                }
+            } else {
+                res.status(404).send({ success: false, message: 'Failed to update task' })
             }
+
         } catch (err) {
             res.status(404).send(err)
         }

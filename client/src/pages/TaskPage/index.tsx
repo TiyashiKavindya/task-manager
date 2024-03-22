@@ -44,7 +44,6 @@ function TaskPage() {
   const getStatusList = async () => {
     try {
       const res = await getStatus()
-      console.log(res.data);
       setStatusList(res.data)
     } catch (err) {
       console.log(err);
@@ -84,7 +83,7 @@ function TaskPage() {
       <Modal name={MODAL_NAMES.EDIT_TASK} title="Edit Task">
         <EditTaskForm defaultValues={taskToEdit} refetch={refetch} />
       </Modal>
-      <div className="flex border-b min-h-10 gap-6 max-w-[250px] md:max-w-[600px] lg:max-w-[1000px] xl:max-w-[1200px] overflow-x-scroll no-scrollbar">
+      <div className="flex border-b min-h-10 gap-6 max-w-[275px] sm:max-w-[350px] md:max-w-[600px] lg:max-w-[1000px] xl:max-w-[1200px] overflow-x-scroll no-scrollbar">
         <button
           className={`mix-blend-normal border-b-2 pb-3 hover:text-emerald-500 hover:border-emerald-500 duration-300 ease-in-out text-nowrap ${activeFilter === 'All' ? 'text-emerald-500 border-emerald-500' : 'border-transparent'}`}
           onClick={() => setActiveFilter('All')}

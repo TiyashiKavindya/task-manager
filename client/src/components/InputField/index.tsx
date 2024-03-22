@@ -6,9 +6,9 @@ interface InputFieldProps extends InputHTMLAttributes<HTMLInputElement> {
 function InputField(props: InputFieldProps) {
     const { label, ...rest } = props
     return (
-        <div className="h-20 flex-grow">
+        <div className="mb-1">
             <label className="">{label}</label>
-            <input className="mt-1 w-full border border-gray-300 rounded-md p-2 focus:outline-none focus:ring-2 focus:ring-emerald-500 focus:border-transparent" {...rest} />
+            <input className="mt-1 w-full border border-gray-300 rounded-[5px] px-2 py-[7px] focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-transparent" {...rest} />
         </div>
     )
 }
