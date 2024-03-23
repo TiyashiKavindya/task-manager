@@ -1,6 +1,6 @@
 /* eslint-disable react-refresh/only-export-components */
 import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { ContextProviderProps } from "../types";
+import { ContextProviderProps, Tag } from "../types";
 import { getActivityTypes, getStatus, getTags } from "../api";
 
 export const Context = createContext<any>({});
@@ -48,11 +48,16 @@ function DataContextProvider({ children }: ContextProviderProps) {
     getIntitalData()
   }, [])
 
+  const getTagInfoById = (id: number) => {
+    return tags.find((tag: Tag) => tag.id === id)
+  }
+
   return (
     <Context.Provider value={{
       statuses,
       updateStatuses,
       tags,
+      getTagInfoById,
       updateTags,
       activityTypes,
       updateActivityTypes
