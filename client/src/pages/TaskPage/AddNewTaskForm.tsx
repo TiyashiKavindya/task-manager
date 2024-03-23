@@ -29,7 +29,7 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
             const res = await saveTasks({ ...formData, tags })
             if (res.data.success) {
                 toast('Task Created', 'Task saved successfully')
-                refetch()
+               refetch()
             } else {
                 toast('Task Failed', 'Task creation failed')
             }

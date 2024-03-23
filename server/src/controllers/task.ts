@@ -32,9 +32,16 @@ const controller = {
             const { name, content, status_id, start_date, end_date, tags } = req.body
             const result = await Task.create([name, content, parseInt(status_id), new Date(start_date), new Date(end_date)])
             if (result.success) {
-                tags.forEach(async (tag_id: number) => {
+                // tags.forEach(async (tag_id: number) => {
+                //     await TaskTag.create([result.data.insertId, tag_id])
+                // })
+
+                const promises = tags.map(async (tag_id: number) => {
                     await TaskTag.create([result.data.insertId, tag_id])
                 })
+
+                const d = Promise.all(promises)
+
                 res.status(201).send(result)
             }
         } catch (err) {
