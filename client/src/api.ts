@@ -1,4 +1,10 @@
 import axios from "./axios"
+const abortController = new AbortController();
+const { signal } = abortController;
+
+export const abortRequest = () => {
+    abortController.abort();
+}
 
 export const getSelectOptions = async () => {
     const tags = await axios.get('/tag')
@@ -10,11 +16,11 @@ export const getSelectOptions = async () => {
 }
 
 export const saveTasks = async (data: any) => {
-    return await axios.post('/task', data)
+    return await axios.post('/task', data, { signal })
 }
 
 export const getTasks = async () => {
-    return await axios.get('/task')
+    return await axios.get('/task', { signal })
 }
 
 export const deleteTaskById = async (id: number) => {
