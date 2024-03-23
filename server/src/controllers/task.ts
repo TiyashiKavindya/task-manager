@@ -1,8 +1,6 @@
 import { Request, Response } from "express"
 import Task from "../models/task"
 import TaskTag from "../models/TaskTag"
-import Tag from "../models/tag"
-import Status from "../models/status"
 
 const controller = {
     selectAll: async (req: Request, res: Response) => {
@@ -32,16 +30,10 @@ const controller = {
             const { name, content, status_id, start_date, end_date, tags } = req.body
             const result = await Task.create([name, content, parseInt(status_id), new Date(start_date), new Date(end_date)])
             if (result.success) {
-                // tags.forEach(async (tag_id: number) => {
-                //     await TaskTag.create([result.data.insertId, tag_id])
-                // })
-
                 const promises = tags.map(async (tag_id: number) => {
                     await TaskTag.create([result.data.insertId, tag_id])
                 })
-
-                const d = Promise.all(promises)
-
+                await Promise.all(promises)
                 res.status(201).send(result)
             }
         } catch (err) {
@@ -56,11 +48,11 @@ const controller = {
             const result = await Task.update(parseInt(id), [name, content, new Date(start_date), new Date(end_date)])
             if (result.success) {
                 const deleteOld = await TaskTag.deleteByTaskId(parseInt(id))
-                console.log(res);
                 if (deleteOld.success) {
-                    tags.forEach(async (tag_id: number) => {
+                    const promises = tags.map(async (tag_id: number) => {
                         await TaskTag.create([parseInt(id), tag_id])
                     })
+                    await Promise.all(promises)
                     res.status(200).send(result)
                 } else {
                     res.status(404).send({ success: false, message: 'Failed to update tags' })

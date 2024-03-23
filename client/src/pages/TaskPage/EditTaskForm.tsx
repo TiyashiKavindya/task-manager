@@ -16,7 +16,7 @@ type EditTaskFormProps = {
 
 function EditTaskForm({ defaultValues, refetch }: EditTaskFormProps) {
     const { closeModal, toast } = useAppContext()
-    const { tags } = useDataContext()
+    const { tags, getTagsByIds } = useDataContext()
 
     const [selectedTags, setSelectedTags] = useState<MultiValue<SelectOption>>([])
 
@@ -51,7 +51,7 @@ function EditTaskForm({ defaultValues, refetch }: EditTaskFormProps) {
                             <label>Tags</label>
                             <Select
                                 className="mt-1"
-                                defaultValue={makeAsOptions(defaultValues.tags, 'name', 'id')}
+                                defaultValue={makeAsOptions(getTagsByIds(defaultValues.tags), 'name', 'id')}
                                 isMulti
                                 options={makeAsOptions(tags, 'name', 'id')}
                                 onChange={(selected: MultiValue<SelectOption>) => setSelectedTags(selected)}

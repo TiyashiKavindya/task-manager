@@ -52,12 +52,17 @@ function DataContextProvider({ children }: ContextProviderProps) {
     return tags.find((tag: Tag) => tag.id === id)
   }
 
+  const getTagsByIds = (id: number[]) => {
+    return tags.filter((tag: Tag) => id.includes(tag.id))
+  }
+
   return (
     <Context.Provider value={{
       statuses,
       updateStatuses,
       tags,
       getTagInfoById,
+      getTagsByIds,
       updateTags,
       activityTypes,
       updateActivityTypes
