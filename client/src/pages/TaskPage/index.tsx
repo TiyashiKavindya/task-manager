@@ -7,7 +7,7 @@ import { deleteTaskById, getTasks } from "../../api";
 import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import Scrollable from "../../components/Scrollable";
-import Card from "../../components/Card";
+import TaskCard from "../../components/TaskCard";
 import { MdAdd } from "react-icons/md";
 import { MODAL_NAMES } from "../../constants";
 import EditTaskForm from "./EditTaskForm";
@@ -91,7 +91,7 @@ function TaskPage() {
         <Loading>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
             {filterdTasks.map((task: any) => (
-              <Card
+              <TaskCard
                 key={task.id} data={task}
                 onDeleteAction={() => {
                   confirm(

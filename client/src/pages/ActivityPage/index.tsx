@@ -8,7 +8,7 @@ import Scrollable from '../../components/Scrollable'
 import Loading from '../../components/Loading'
 import { getActivities } from '../../api'
 import { useCallback, useEffect, useState } from 'react'
-import Card from '../../components/Card'
+import Card from '../../components/TaskCard'
 
 function ActivityPage() {
   const { openModal, loading, stopLoading, confirm } = useAppContext()
@@ -20,7 +20,7 @@ function ActivityPage() {
 
   const refetch = useCallback(async () => {
     try {
-      const res = await getActivities('all')
+      const res = await getActivities()
       setActivities(res.data)
     } catch (err) {
       console.log(err);
@@ -31,9 +31,7 @@ function ActivityPage() {
     const getAllTask = async () => {
       try {
         loading()
-        console.log("refetching");
         await refetch()
-        console.log("refetched");
         stopLoading()
       } catch (err) {
         console.log(err);

@@ -5,22 +5,20 @@ import DropDown from "../DropDown";
 import { useAppContext, useDataContext } from "../../contexts";
 import { convertDateFormat, makeAsOptions } from "../../utils";
 
-type CardProps = {
+type TaskCardProps = {
     data: any
     onEditAction: (id: number) => void
     onDeleteAction: (id: number) => void
     refetch?: () => void
 }
 
-function Card({ data, onEditAction, onDeleteAction, refetch }: CardProps) {
+function TaskCard({ data, onEditAction, onDeleteAction, refetch }: TaskCardProps) {
     const { toast } = useAppContext()
     const { statuses, getTagInfoById } = useDataContext()
 
     const handleUpdateStatus = async (id: number, value: number | string) => {
         try {
             const res = await updateStatus(id, value)
-            console.log(res.data);
-
             if (res.data.success) {
                 refetch && refetch()
                 toast('Status Changed', 'Task status updated successfully.')
@@ -41,10 +39,12 @@ function Card({ data, onEditAction, onDeleteAction, refetch }: CardProps) {
             </div>
             <div className="flex flex-wrap gap-2">
                 {
-                    data.tags ? data.tags.map((id: number) => {
-                        const tag = getTagInfoById(id)
-                        return tag ? <Tag key={tag.id} text={tag.name} color={tag.color} /> : <></>
-                    }) : <></>
+                    data.tags ?
+                        data.tags.map((id: number) => {
+                            const tag = getTagInfoById(id)
+                            return tag && <Tag key={tag.id} text={tag.name} color={tag.color} />
+                        })
+                        : <></>
                 }
             </div>
             <div className="flex-grow overflow-y-auto no-scrollbar">
@@ -63,4 +63,4 @@ function Card({ data, onEditAction, onDeleteAction, refetch }: CardProps) {
     )
 }
 
-export default Card
+export default TaskCard

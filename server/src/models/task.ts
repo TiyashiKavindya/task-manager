@@ -9,7 +9,7 @@ const Task = {
         JSON_ARRAYAGG(CAST(tt.tag_id AS UNSIGNED)) AS tags
         FROM task t
         INNER JOIN status s ON t.status_id = s.id
-        INNER JOIN task_tag tt ON t.id = tt.task_id GROUP BY t.id
+        LEFT JOIN task_tag tt ON t.id = tt.task_id GROUP BY t.id
         `)
     },
     selectById: (id: number) => {

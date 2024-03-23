@@ -45,7 +45,6 @@ export const saveActivity = async (data: any) => {
     return await axios.post('/activity', data)
 }
 
-export const getActivities = async (t: string) => {
-    console.log("activity:", t);
+export const getActivities = async () => {
     return await axios.get('/activity')
 }
