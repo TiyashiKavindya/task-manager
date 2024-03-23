@@ -1,9 +1,9 @@
-import { useAppContext } from "../../contexts"
+import { useAppContext, useDataContext } from "../../contexts"
 import Modal from "../../components/Modal"
 import AddNewTaskForm from "./AddNewTaskForm"
 import { IoIosAddCircleOutline } from "react-icons/io";
 import Header from "../../components/Header";
-import { deleteTaskById, getStatus, getTasks } from "../../api";
+import { deleteTaskById, getTasks } from "../../api";
 import { useEffect, useState } from "react";
 import Loading from "../../components/Loading";
 import Scrollable from "../../components/Scrollable";
@@ -14,11 +14,11 @@ import EditTaskForm from "./EditTaskForm";
 
 function TaskPage() {
   const { openModal, loading, stopLoading, toast, confirm } = useAppContext()
+  const { statuses } = useDataContext()
 
   const [tasks, setTasks] = useState([])
   const [filterdTasks, setFilterdTasks] = useState([])
   const [taskToEdit, setTaskToEdit] = useState(null)
-  const [statusList, setStatusList] = useState([])
   const [activeFilter, setActiveFilter] = useState('All')
 
   const refetch = async () => {
@@ -41,15 +41,6 @@ function TaskPage() {
     }
   }
 
-  const getStatusList = async () => {
-    try {
-      const res = await getStatus()
-      setStatusList(res.data)
-    } catch (err) {
-      console.log(err);
-    }
-  }
-
   useEffect(() => {
     const getAllTask = async () => {
       try {
@@ -62,7 +53,6 @@ function TaskPage() {
       }
     }
     getAllTask()
-    getStatusList()
   }, [])
 
   useEffect(() => {
@@ -89,7 +79,7 @@ function TaskPage() {
           onClick={() => setActiveFilter('All')}
         >All</button>
         {
-          statusList.length > 0 && statusList.map((status: any) => (
+          statuses.length > 0 && statuses.map((status: any) => (
             <button key={status.id}
               className={`mix-blend-normal border-b-2 pb-3 hover:text-emerald-500 hover:border-emerald-500 duration-300 ease-in-out text-nowrap ${activeFilter === status.title ? 'text-emerald-500 border-emerald-500' : 'border-transparent'}`}
               onClick={() => setActiveFilter(status.title)}

@@ -5,7 +5,7 @@ import TextArea from "../../components/TextArea"
 import Loading from "../../components/Loading"
 import { useAppContext } from "../../contexts"
 import { SelectOption } from "../../types"
-import { getSelectOptions, saveTasks } from "../../api"
+import { getActivityTypes, getSelectOptions, saveActivity } from "../../api"
 import RMSelect from 'react-select'
 import { MultiValue } from 'react-select'
 
@@ -18,6 +18,7 @@ function AddNewActivityForm({ refetch }: AddNewActivityFormProps) {
     const { closeModal, toast } = useAppContext()
     const [tags, setTags] = useState<SelectOption[]>([])
     const [statuses, setstatuses] = useState<SelectOption[]>([])
+    const [activityTypes, setactivityTypes] = useState<SelectOption[]>([])
     const [multiSelectValue, setMultiSelectValue] = useState<MultiValue<SelectOption>>([])
 
     const getFormDefaultValues = async () => {
@@ -25,6 +26,9 @@ function AddNewActivityForm({ refetch }: AddNewActivityFormProps) {
             const res = await getSelectOptions()
             setTags(res.tags.map((tag: any) => ({ label: tag.name, value: tag.id })) as SelectOption[])
             setstatuses(res.statuses.map((status: any) => ({ label: status.title, value: status.id })) as SelectOption[])
+
+            const activityTypes = await getActivityTypes()
+            setactivityTypes(activityTypes.data.map((activityType: any) => ({ label: activityType.name, value: activityType.id })) as SelectOption[])
         } catch (err) {
             console.log(err)
         }
@@ -34,17 +38,19 @@ function AddNewActivityForm({ refetch }: AddNewActivityFormProps) {
         e.preventDefault()
         const formData = Object.fromEntries(new FormData(e.currentTarget))
         const tags = multiSelectValue.map(o => o.value)
+        console.log({ ...formData, tags });
+
         try {
-            const res = await saveTasks({ ...formData, tags })
+            const res = await saveActivity({ ...formData, tags })
             if (res.data.success) {
-                toast('Task Created', 'Task saved successfully')
+                toast('Activity Created', 'Activity saved successfully')
                 refetch()
             } else {
-                toast('Task Failed', 'Task creation failed')
+                toast('Activity Failed', 'Activity creation failed')
             }
         } catch (err: any) {
             console.log(err)
-            toast('Task Failed', err.message as string)
+            toast('Activity Failed', err.message as string)
         } finally {
             closeModal()
             setMultiSelectValue([])
@@ -56,12 +62,22 @@ function AddNewActivityForm({ refetch }: AddNewActivityFormProps) {
     }, [])
 
     return (
-        <div className="overflow-y-auto px-1">
+        <div className="px-1 max-h-[80dvh] overflow-y-auto md:w-[700px] lg:w-[800px]">
             <Loading>
                 <form onSubmit={handleSave}>
-                    <div className="flex gap-2">
-                        <InputField required label="Title" placeholder="Enter the title of the task" name="name" />
-                        <div className="w-36">
+                    <div className="flex flex-col sm:flex-row gap-2">
+                        <InputField required label="Title" placeholder="Enter the title of the task" name="title" />
+                        <div className="w-full sm:w-36">
+                            <label>Activity Type</label>
+                            <RMSelect
+                                required
+                                className="mt-1 w-full"
+                                name="activity_type_id"
+                                options={activityTypes}
+                                defaultValue={activityTypes[0]}
+                            />
+                        </div>
+                        <div className="w-full sm:w-36">
                             <label>Status</label>
                             <RMSelect
                                 required
@@ -72,7 +88,7 @@ function AddNewActivityForm({ refetch }: AddNewActivityFormProps) {
                             />
                         </div>
                     </div>
-                    <TextArea required rows={4} label="Description" name="content" placeholder="Enter a detailed description" />
+                    <TextArea required rows={3} label="Description" name="description" placeholder="Enter a detailed description" />
                     <div className="mb-3">
                         <label>Tags</label>
                         <RMSelect

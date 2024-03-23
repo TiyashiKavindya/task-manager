@@ -1,11 +1,9 @@
 import { AiOutlineDelete, AiOutlineEdit } from "react-icons/ai";
 import Tag from "../Tag";
-import { SelectOption } from "../../types";
-import { useEffect, useState } from "react";
-import { getStatus, updateStatus } from "../../api";
+import { updateStatus } from "../../api";
 import DropDown from "../DropDown";
-import { useAppContext } from "../../contexts";
-import { convertDateFormat } from "../../utils";
+import { useAppContext, useDataContext } from "../../contexts";
+import { convertDateFormat, makeAsOptions } from "../../utils";
 
 type CardProps = {
     data: any
@@ -16,7 +14,7 @@ type CardProps = {
 
 function Card({ data, onEditAction, onDeleteAction, refetch }: CardProps) {
     const { toast } = useAppContext()
-    const [statusSelectOptions, setStatusSelectOptions] = useState<SelectOption[]>([])
+    const { statuses } = useDataContext()
 
     const handleUpdateStatus = async (id: number, value: number | string) => {
         try {
@@ -35,20 +33,6 @@ function Card({ data, onEditAction, onDeleteAction, refetch }: CardProps) {
         }
     }
 
-    const getTagSelectOptions = async () => {
-        try {
-            const res = await getStatus()
-            const op = res.data.map((t: any) => ({ label: t.title, value: t.id }))
-            setStatusSelectOptions(op)
-        } catch (err) {
-            console.log(err)
-        }
-    }
-
-    useEffect(() => {
-        getTagSelectOptions()
-    }, [])
-
     return (
         <div className="bg-white h-80 p-4 rounded-lg border flex flex-col justify-between gap-3" style={{ borderColor: data.status.style }}>
             <div className="">
@@ -64,7 +48,7 @@ function Card({ data, onEditAction, onDeleteAction, refetch }: CardProps) {
                 <p className="text-sm text-ellipsis text-gray-500">{data.content} </p>
             </div>
             <div className="flex justify-between items-center">
-                <DropDown options={statusSelectOptions} onChange={(value) => handleUpdateStatus(data.id, value)}>
+                <DropDown options={makeAsOptions(statuses, 'title', 'id')} onChange={(value) => handleUpdateStatus(data.id, value)}>
                     <div className="px-3 py-2 rounded-md text-white" style={{ backgroundColor: data.status.style }}>{data.status.title}</div>
                 </DropDown>
                 <div className="flex gap-2 items-center">

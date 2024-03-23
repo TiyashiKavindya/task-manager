@@ -11,3 +11,7 @@ export type Task = {
     startDate: string
     dueDate: string
 }
+
+export type ContextProviderProps = {
+    children: React.ReactNode
+}

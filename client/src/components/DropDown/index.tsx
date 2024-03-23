@@ -1,9 +1,10 @@
 import { useEffect, useRef, useState } from "react"
 import { SelectOption } from "../../types"
+import { MultiValue } from "react-select"
 
 type DropdownProps = {
     children: React.ReactNode
-    options: SelectOption[]
+    options: SelectOption[] | MultiValue<SelectOption>
     onChange: (id: number | string) => void
 }
 function DropDown({ children, options, onChange }: DropdownProps) {

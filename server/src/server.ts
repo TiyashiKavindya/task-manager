@@ -7,6 +7,7 @@ import tag from "./routes/tag"
 import status from "./routes/status"
 import task from "./routes/task"
 import activity from "./routes/activity"
+import activityType from "./routes/activityType"
 
 const app = express()
 app.use(cors())
@@ -17,6 +18,7 @@ app.use('/api/tag', tag)
 app.use('/api/status', status)
 app.use('/api/task', task)
 app.use('/api/activity', activity)
+app.use('/api/activity_type', activityType)
 
 app.listen(SERVER_PORT, () => {
     console.log(`Server is running on port ${SERVER_PORT}`)

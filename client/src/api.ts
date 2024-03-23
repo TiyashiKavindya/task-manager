@@ -36,3 +36,16 @@ export const updateStatus = async (id: number, status: number | string) => {
 export const updateTasks = async (id: number, data: any) => {
     return await axios.patch(`/task/${id}`, data)
 }
+
+export const getActivityTypes = async () => {
+    return await axios.get('/activity_type')
+}
+
+export const saveActivity = async (data: any) => {
+    return await axios.post('/activity', data)
+}
+
+export const getActivities = async (t: string) => {
+    console.log("activity:", t);
+    return await axios.get('/activity')
+}

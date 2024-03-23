@@ -1,11 +1,11 @@
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent, useState } from "react"
 import DatePicker from "../../components/DatePicker"
 import InputField from "../../components/InputField"
 import TextArea from "../../components/TextArea"
 import Loading from "../../components/Loading"
-import { useAppContext } from "../../contexts"
-import { getTags, updateTasks } from "../../api"
-import { convertDateFormat } from "../../utils"
+import { useAppContext, useDataContext } from "../../contexts"
+import { updateTasks } from "../../api"
+import { convertDateFormat, makeAsOptions } from "../../utils"
 import Select, { MultiValue } from 'react-select';
 import { SelectOption } from "../../types"
 
@@ -16,7 +16,8 @@ type EditTaskFormProps = {
 
 function EditTaskForm({ defaultValues, refetch }: EditTaskFormProps) {
     const { closeModal, toast } = useAppContext()
-    const [tagsOptions, setTagsOptions] = useState<SelectOption[]>([])
+    const { tags } = useDataContext()
+
     const [selectedTags, setSelectedTags] = useState<MultiValue<SelectOption>>([])
 
     const handleUpdate = async (e: FormEvent<HTMLFormElement>, id: number) => {
@@ -39,21 +40,9 @@ function EditTaskForm({ defaultValues, refetch }: EditTaskFormProps) {
         }
     }
 
-    useEffect(() => {
-        const getTagList = async () => {
-            try {
-                const res = await getTags()
-                setTagsOptions(res.data.map((tag: any) => ({ label: tag.name, value: tag.id })) as SelectOption[])
-            } catch (err) {
-                console.log(err)
-            }
-        }
-        getTagList()
-    }, [])
-
     if (defaultValues) {
         return (
-            <div className="overflow-y-auto px-1">
+            <div className="px-1 max-h-[80dvh] overflow-y-auto md:w-[700px]">
                 <Loading>
                     <form onSubmit={(e) => handleUpdate(e, defaultValues.id)} className="flex flex-col gap-2">
                         <InputField required label="Title" placeholder="Enter the title of the task" name="name" defaultValue={defaultValues.name} />
@@ -62,9 +51,9 @@ function EditTaskForm({ defaultValues, refetch }: EditTaskFormProps) {
                             <label>Tags</label>
                             <Select
                                 className="mt-1"
-                                defaultValue={defaultValues.tags.map((t: any) => ({ label: t.name, value: t.id, }))}
+                                defaultValue={makeAsOptions(defaultValues.tags, 'name', 'id')}
                                 isMulti
-                                options={tagsOptions}
+                                options={makeAsOptions(tags, 'name', 'id')}
                                 onChange={(selected: MultiValue<SelectOption>) => setSelectedTags(selected)}
                             />
                         </div>

@@ -1,13 +1,14 @@
-import { FormEvent, useEffect, useState } from "react"
+import { FormEvent, useState } from "react"
 import DatePicker from "../../components/DatePicker"
 import InputField from "../../components/InputField"
 import TextArea from "../../components/TextArea"
 import Loading from "../../components/Loading"
-import { useAppContext } from "../../contexts"
+import { useAppContext, useDataContext } from "../../contexts"
 import { SelectOption } from "../../types"
-import { getSelectOptions, saveTasks } from "../../api"
+import { saveTasks } from "../../api"
 import RMSelect from 'react-select'
 import { MultiValue } from 'react-select'
+import { makeAsOptions } from "../../utils"
 
 
 type AddNewTaskFormProps = {
@@ -16,19 +17,9 @@ type AddNewTaskFormProps = {
 
 function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
     const { closeModal, toast } = useAppContext()
-    const [tags, setTags] = useState<SelectOption[]>([])
-    const [statuses, setstatuses] = useState<SelectOption[]>([])
-    const [multiSelectValue, setMultiSelectValue] = useState<MultiValue<SelectOption>>([])
+    const { statuses, tags } = useDataContext()
 
-    const getFormDefaultValues = async () => {
-        try {
-            const res = await getSelectOptions()
-            setTags(res.tags.map((tag: any) => ({ label: tag.name, value: tag.id })) as SelectOption[])
-            setstatuses(res.statuses.map((status: any) => ({ label: status.title, value: status.id })) as SelectOption[])
-        } catch (err) {
-            console.log(err)
-        }
-    }
+    const [multiSelectValue, setMultiSelectValue] = useState<MultiValue<SelectOption>>([])
 
     const handleSave = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
@@ -51,24 +42,19 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
         }
     }
 
-    useEffect(() => {
-        getFormDefaultValues()
-    }, [])
-
     return (
-        <div className="overflow-y-auto px-1">
+        <div className="px-1 max-h-[80dvh] overflow-y-auto md:w-[700px]">
             <Loading>
                 <form onSubmit={handleSave}>
-                    <div className="flex gap-2">
+                    <div className="flex flex-col sm:flex-row gap-2">
                         <InputField required label="Title" placeholder="Enter the title of the task" name="name" />
-                        <div className="w-36">
+                        <div className="w-full sm:w-36">
                             <label>Status</label>
                             <RMSelect
                                 required
                                 className="mt-1 w-full"
                                 name="status_id"
-                                options={statuses}
-                                defaultValue={statuses[0]}
+                                options={makeAsOptions(statuses, 'title', 'id')}
                             />
                         </div>
                     </div>
@@ -79,7 +65,7 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
                             className="mt-1"
                             name="tags"
                             isMulti
-                            options={tags}
+                            options={makeAsOptions(tags, 'name', 'id')}
                             onChange={(selected: MultiValue<SelectOption>) => setMultiSelectValue(selected)}
                         />
                     </div>

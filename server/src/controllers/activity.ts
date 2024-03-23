@@ -1,10 +1,12 @@
 import { Request, Response } from "express"
-import db from "../db"
+import Activity from "../models/activity"
+import { nullableDate, nullableString } from "../utils"
+import ActivityTag from "../models/ActivityTag"
 
 const controller = {
-    getAll: async (req: Request, res: Response) => {
+    selectAll: async (req: Request, res: Response) => {
         try {
-            const result = await db.query('SELECT * FROM activity')
+            const result = await Activity.selectAll()
             if (result.success) {
                 res.status(200).send(result.data)
             }
@@ -12,10 +14,10 @@ const controller = {
             res.status(404).send(err)
         }
     },
-    getOne: async (req: Request, res: Response) => {
+    selectById: async (req: Request, res: Response) => {
         try {
             const id = req.params.id
-            const result = await db.query('SELECT * FROM activity WHERE id = ?', [id])
+            const result = await Activity.selectById(parseInt(id))
             if (result.success) {
                 res.status(200).send(result.data)
             }
@@ -24,33 +26,36 @@ const controller = {
         }
 
     },
-    add: async (req: Request, res: Response) => {
+    create: async (req: Request, res: Response) => {
         try {
-            const { name, description, status, tagId } = req.body
-            const result = await db.query('INSERT INTO activity (name, description, status, tagId) VALUES (?, ?, ?, ?)', [name, description, status, tagId])
+            const { title, description, url, start_date, end_date, status_id, activity_type_id, tags } = req.body
+            const result = await Activity.create([title, description, nullableString(url), nullableDate(start_date), nullableDate(end_date), status_id, activity_type_id])
             if (result.success) {
-                res.status(201).send('Activity added')
+                tags.forEach(async (tag_id: number) => {
+                    await ActivityTag.create([result.data.insertId, tag_id])
+                })
+                res.status(201).send(result)
             }
         } catch (err) {
             res.status(404).send(err)
         }
     },
     update: async (req: Request, res: Response) => {
-        try {
-            const id = req.params.id
-            const { name, description, status, tagId } = req.body
-            const result = await db.query('UPDATE activity SET name = ?, description = ?, status = ?, tagId = ? WHERE id = ?', [name, description, status, tagId, id])
-            if (result.success) {
-                res.status(200).send('Activity updated')
-            }
-        } catch (err) {
-            res.status(404).send(err)
-        }
+        // try {
+        //     const id = req.params.id
+        //     const { name, description, status, tagId } = req.body
+        //     const result = await db.query('UPDATE activity SET name = ?, description = ?, status = ?, tagId = ? WHERE id = ?', [name, description, status, tagId, id])
+        //     if (result.success) {
+        //         res.status(200).send('Activity updated')
+        //     }
+        // } catch (err) {
+        //     res.status(404).send(err)
+        // }
     },
     delete: async (req: Request, res: Response) => {
         try {
             const id = req.params.id
-            const result = await db.query('DELETE FROM activity WHERE id = ?', [id])
+            const result = await Activity.delete(parseInt(id))
             if (result.success) {
                 res.status(200).send('Activity deleted')
             }
