@@ -56,8 +56,8 @@ function EditTaskForm({ defaultValues, refetch }: EditTaskFormProps) {
             <div className="overflow-y-auto px-1">
                 <Loading>
                     <form onSubmit={(e) => handleUpdate(e, defaultValues.id)} className="flex flex-col gap-2">
-                        <InputField label="Title" placeholder="Enter the title of the task" name="name" defaultValue={defaultValues.name} />
-                        <TextArea label="Description" name="content" placeholder="Enter a detailed description" defaultValue={defaultValues.content} />
+                        <InputField required label="Title" placeholder="Enter the title of the task" name="name" defaultValue={defaultValues.name} />
+                        <TextArea required rows={4} label="Description" name="content" placeholder="Enter a detailed description" defaultValue={defaultValues.content} />
                         <div className="">
                             <label>Tags</label>
                             <Select
@@ -69,8 +69,8 @@ function EditTaskForm({ defaultValues, refetch }: EditTaskFormProps) {
                             />
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                            <DatePicker name="start_date" label="Start Date" defaultValue={convertDateFormat(defaultValues.start_date)} />
-                            <DatePicker name="end_date" label="Due Date" defaultValue={convertDateFormat(defaultValues.end_date)} />
+                            <DatePicker required name="start_date" label="Start Date" defaultValue={convertDateFormat(defaultValues.start_date)} />
+                            <DatePicker required name="end_date" label="Due Date" defaultValue={convertDateFormat(defaultValues.end_date)} />
                         </div>
                         <div className="mt-4 flex justify-between items-center">
                             <button type="button" onClick={closeModal} className="btn border-2 border-emerald-500 text-emerald-500">Cancel</button>

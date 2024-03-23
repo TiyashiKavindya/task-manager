@@ -60,10 +60,11 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
             <Loading>
                 <form onSubmit={handleSave}>
                     <div className="flex gap-2">
-                        <InputField label="Title" placeholder="Enter the title of the task" name="name" />
+                        <InputField required label="Title" placeholder="Enter the title of the task" name="name" />
                         <div className="w-36">
                             <label>Status</label>
                             <RMSelect
+                                required
                                 className="mt-1 w-full"
                                 name="status_id"
                                 options={statuses}
@@ -71,7 +72,7 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
                             />
                         </div>
                     </div>
-                    <TextArea label="Description" name="content" placeholder="Enter a detailed description" />
+                    <TextArea required rows={4} label="Description" name="content" placeholder="Enter a detailed description" />
                     <div className="mb-3">
                         <label>Tags</label>
                         <RMSelect
@@ -83,8 +84,8 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
                         />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <DatePicker name="start_date" label="Start Date" />
-                        <DatePicker name="end_date" label="Due Date" />
+                        <DatePicker required name="start_date" label="Start Date" />
+                        <DatePicker required name="end_date" label="Due Date" />
                     </div>
                     <div className="mt-4 flex justify-between items-center">
                         <button type="button" onClick={closeModal} className="btn border-2 border-emerald-500 text-emerald-500">Cancel</button>
