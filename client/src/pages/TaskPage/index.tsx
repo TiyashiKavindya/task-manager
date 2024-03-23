@@ -59,7 +59,7 @@ function TaskPage() {
     if (activeFilter === 'All') {
       setFilterdTasks(tasks)
     } else {
-      const filteredTasks = tasks.filter((task: any) => task.status.title === activeFilter)
+      const filteredTasks = tasks.filter((task: any) => task.status_title === activeFilter)
       setFilterdTasks(filteredTasks)
     }
   }, [activeFilter, tasks])
