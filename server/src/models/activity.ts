@@ -4,10 +4,9 @@ const Activity = {
     selectAll: () => {
         return db.query(`
         SELECT 
-            a.*, 
-            at.name as activity_type, 
-            s.title as status, 
-            s.style as status_style 
+        a.*, 
+        at.name as activity_type, 
+        s.title as status, s.style as status_style 
         FROM activity a 
         INNER JOIN activity_type at ON a.activity_type_id = at.id 
         INNER JOIN status s ON a.status_id = s.id`

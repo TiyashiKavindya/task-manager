@@ -2,7 +2,7 @@ import db from "../db"
 
 const Task = {
     selectAll: () => {
-        return db.query('SELECT * FROM task')
+        return db.query(`SELECT * from task`)
     },
     selectById: (id: number) => {
         return db.query('SELECT * FROM task WHERE id = ?', [id])

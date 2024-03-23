@@ -9,13 +9,13 @@ const controller = {
         try {
             const result = await Task.selectAll()
             if (result.success) {
-                const tasks = []
-                for (let task of result.data) {
-                    const tags = await Tag.selectByTaskId(task.id)
-                    const status = await Status.selectById(task.status_id)
-                    tasks.push({ ...task, tags: tags.data, status: status.data[0] })
-                }
-                res.status(200).send(tasks)
+                const promise = result.data.map(async (task: any) => {
+                    const tags = await Tag.selectByTaskId(task.id);
+                    const status = await Status.selectById(task.status_id);
+                    return { ...task, tags: tags.data, status: status.data[0] };
+                });
+                const data = await Promise.all(promise);
+                res.status(200).send(data);
             }
         } catch (err) {
             res.status(404).send(err)
