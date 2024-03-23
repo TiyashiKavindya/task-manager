@@ -5,6 +5,7 @@ import { ROUTES } from "./routes"
 import ContextProvider from "./contexts"
 import Toast from "./components/Toast"
 import Confirm from "./components/Confirm"
+import SingleActiviy from "./pages/SingleActivity"
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
                   <Route key={index} path={route.path} element={<route.component />} />
                 ))
               }
+              <Route path="/activity/:id" element={<SingleActiviy />} />
             </Routes>
           </Content>
           <Confirm />

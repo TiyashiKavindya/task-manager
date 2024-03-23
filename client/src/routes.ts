@@ -1,6 +1,6 @@
 import Dashboard from "./pages/Dashboard";
-import TaskPage from "./pages/TaskPage";
-import ActivityPage from "./pages/ActivityPage";
+import TaskPage from "./pages/Task";
+import ActivityPage from "./pages/Activity";
 import { AiOutlineHome } from "react-icons/ai";
 import { FaTasks } from "react-icons/fa";
 import { RxActivityLog } from "react-icons/rx";

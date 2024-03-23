@@ -4,16 +4,27 @@ const Activity = {
     selectAll: () => {
         return db.query(`
         SELECT 
-        a.*, 
+        a.id, a.title, a.start_date, a.end_date,
         at.name as activity_type, 
-        s.title as status, s.style as status_style 
+        s.title as status_title, s.style as status_style
         FROM activity a 
         INNER JOIN activity_type at ON a.activity_type_id = at.id 
-        INNER JOIN status s ON a.status_id = s.id`
-        )
+        INNER JOIN status s ON a.status_id = s.id
+        `)
     },
+
     selectById: (id: number) => {
-        return db.query('SELECT * FROM activity WHERE id = ?', [id])
+        return db.query(`
+        SELECT 
+        a.*, 
+        at.name as activity_type, 
+        s.title as status_title, s.style as status_style,
+        JSON_ARRAYAGG(CAST(atag.tag_id AS UNSIGNED)) AS tags
+        FROM activity a 
+        INNER JOIN activity_type at ON a.activity_type_id = at.id 
+        INNER JOIN status s ON a.status_id = s.id
+        LEFT JOIN activity_tag atag ON a.id = atag.activity_id WHERE a.id = ? GROUP BY a.id
+        `, [id])
     },
     create: (data: any[]) => {
         return db.query('INSERT INTO activity (title, description, url, start_date, end_date, status_id, activity_type_id) VALUES (?, ?, ?, ?, ?, ?, ?)', data)

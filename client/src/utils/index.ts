@@ -1,7 +1,8 @@
 import { MultiValue } from "react-select"
 import { SelectOption } from "../types"
 
-export const convertDateFormat = (dateString: string, separator: string = '-') => {
+export const convertDateFormat = (dateString: string | null, separator: string = '-') => {
+    if (!dateString || dateString === '') return
     const date = new Date(dateString)
     const year = date.getFullYear()
     const month = String(date.getMonth() + 1).padStart(2, '0')

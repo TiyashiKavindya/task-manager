@@ -4,6 +4,7 @@ import { updateStatus } from "../../api";
 import DropDown from "../DropDown";
 import { useAppContext, useDataContext } from "../../contexts";
 import { convertDateFormat, makeAsOptions } from "../../utils";
+import { MdOutlineChangeCircle } from "react-icons/md";
 
 type TaskCardProps = {
     data: any
@@ -32,7 +33,7 @@ function TaskCard({ data, onEditAction, onDeleteAction, refetch }: TaskCardProps
     }
 
     return (
-        <div className="bg-white h-80 p-4 rounded-lg border flex flex-col justify-between gap-3" style={{ borderColor: data.status_style }}>
+        <div className="bg-white h-80 p-4 rounded-lg border border-gray-500 flex flex-col justify-between gap-3">
             <div className="">
                 <h1 className="text-lg font-bold line-clamp-2 text-ellipsis">{data.name}</h1>
                 <p className="text-sm text-gray-500">{convertDateFormat(data.start_date, '/')} to {convertDateFormat(data.end_date, '/')}</p>
@@ -51,8 +52,14 @@ function TaskCard({ data, onEditAction, onDeleteAction, refetch }: TaskCardProps
                 <p className="text-sm text-ellipsis text-gray-500">{data.content} </p>
             </div>
             <div className="flex justify-between items-center">
+
                 <DropDown options={makeAsOptions(statuses, 'title', 'id')} onChange={(value) => handleUpdateStatus(data.id, value)}>
-                    <div className="px-3 py-2 rounded-md text-white" style={{ backgroundColor: data.status_style }}>{data.status_title}</div>
+                    <div className=" w-36 flex items-center justify-between border-2 rounded-full" style={{ backgroundColor: data.status_style }} >
+                        <div className="h-8 w-8 text-md rounded-full flex justify-center items-center bg-white" style={{ color: data.status_style }}>
+                            <MdOutlineChangeCircle className="" />
+                        </div>
+                        <p className="pr-4 text-md text-white">{data.status_title}</p>
+                    </div>
                 </DropDown>
                 <div className="flex gap-2 items-center">
                     <button onClick={() => onEditAction(data.id)} className="p-2 hover:bg-teal-500 hover:text-white duration-300 ease-in-out rounded-full"><AiOutlineEdit className="text-xl" /></button>

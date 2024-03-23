@@ -8,10 +8,10 @@ import Scrollable from '../../components/Scrollable'
 import Loading from '../../components/Loading'
 import { getActivities } from '../../api'
 import { useCallback, useEffect, useState } from 'react'
-import Card from '../../components/TaskCard'
+import ActivityCard from '../../components/ActivityCard'
 
 function ActivityPage() {
-  const { openModal, loading, stopLoading, confirm } = useAppContext()
+  const { openModal, loading, stopLoading } = useAppContext()
   const { statuses } = useDataContext()
 
   const [activities, setActivities] = useState([])
@@ -44,7 +44,7 @@ function ActivityPage() {
     if (activeFilter === 'All') {
       setFilterdActivities(activities)
     } else {
-      const filtered = activities.filter((task: any) => task.status.title === activeFilter)
+      const filtered = activities.filter((task: any) => task.status_title === activeFilter)
       setFilterdActivities(filtered)
     }
   }, [activeFilter, activities])
@@ -72,21 +72,13 @@ function ActivityPage() {
       <Scrollable>
         <Loading>
           <div className="grid grid-cols-1 gap-4">
-            {filterdActivities.map((task: any) => (
-              <Card
-                key={task.id} data={task}
-                onDeleteAction={() => {
-                  confirm(
-                    'Are you sure you want to delete this task?',
-                    'This action cannot be undone.',
-                    'Yes', () => { },
-                    'No'
-                  )
-                }}
-                onEditAction={() => { }}
-              // refetch={refetch}
-              />
-            ))}
+            {
+              filterdActivities.length > 0 ? filterdActivities.map((task: any) => (
+                <ActivityCard key={task.id} data={task}
+                // refetch={refetch}
+                />
+              )) : <div className="text-center text-gray-400">No Activity</div>
+            }
           </div>
         </Loading>
       </Scrollable>
