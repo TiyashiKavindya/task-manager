@@ -12,11 +12,23 @@ const Task = {
         LEFT JOIN task_tag tt ON t.id = tt.task_id GROUP BY t.id
         `)
     },
+    selectByActivity: (id: number) => {
+        return db.query(`
+        SELECT 
+        t.*, 
+        s.title AS status_title, s.style AS status_style,
+        JSON_ARRAYAGG(CAST(tt.tag_id AS UNSIGNED)) AS tags
+        FROM task t
+        INNER JOIN status s ON t.status_id = s.id
+        LEFT JOIN task_tag tt ON t.id = tt.task_id
+        WHERE t.activity_id = ? GROUP BY t.id
+        `, [id])
+    },
     selectById: (id: number) => {
         return db.query('SELECT * FROM task WHERE id = ?', [id])
     },
     create: (data: any[]) => {
-        return db.query('INSERT INTO task (name, content, status_id, start_date, end_date) VALUES (?, ?, ?, ?, ?)', data)
+        return db.query('INSERT INTO task (name, content, status_id, start_date, end_date, activity_id) VALUES (?, ?, ?, ?, ?, ?)', data)
     },
     update: (id: number, data: any[]) => {
         return db.query('UPDATE task SET name = ?, content = ?, start_date = ?, end_date = ? WHERE id = ?', [...data, id])

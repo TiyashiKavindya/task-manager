@@ -1,35 +1,39 @@
-import { FormEvent, useState } from "react"
+import { FormEvent, useEffect, useState } from "react"
 import DatePicker from "../../components/DatePicker"
 import InputField from "../../components/InputField"
 import TextArea from "../../components/TextArea"
 import Loading from "../../components/Loading"
 import { useAppContext, useDataContext } from "../../contexts"
 import { SelectOption } from "../../types"
-import { saveTasks } from "../../api"
-import RMSelect from 'react-select'
+import { getActivitySelectOptions, saveTasks } from "../../api"
+import ReactSelect from 'react-select'
 import { MultiValue } from 'react-select'
 import { makeAsOptions } from "../../utils"
 
-
 type AddNewTaskFormProps = {
     refetch: () => void
+    activityId?: number | string
 }
 
-function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
+function AddNewTaskForm({ refetch, activityId }: AddNewTaskFormProps) {
     const { closeModal, toast } = useAppContext()
     const { statuses, tags } = useDataContext()
 
     const [multiSelectValue, setMultiSelectValue] = useState<MultiValue<SelectOption>>([])
+    const [activitySelectOptions, setActivitySelectOptions] = useState<SelectOption[]>([])
 
     const handleSave = async (e: FormEvent<HTMLFormElement>) => {
         e.preventDefault()
         const formData = Object.fromEntries(new FormData(e.currentTarget))
         const tags = multiSelectValue.map(o => o.value)
+        if (!formData.activity_id) {
+            formData['activity_id'] = activityId as FormDataEntryValue
+        }
         try {
             const res = await saveTasks({ ...formData, tags })
             if (res.data.success) {
                 toast('Task Created', 'Task saved successfully')
-               refetch()
+                refetch()
             } else {
                 toast('Task Failed', 'Task creation failed')
             }
@@ -42,6 +46,20 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
         }
     }
 
+    const loadActivitySelectOptions = async () => {
+        try {
+            const res = await getActivitySelectOptions()
+            setActivitySelectOptions(res.data.map((o: any) => ({ value: o.id, label: o.title })))
+        } catch (err) {
+            console.log(err)
+            setActivitySelectOptions([])
+        }
+    }
+
+    useEffect(() => {
+        loadActivitySelectOptions()
+    }, [])
+
     return (
         <div className="px-1 max-h-[80dvh] overflow-y-auto md:w-[700px]">
             <Loading>
@@ -50,7 +68,7 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
                         <InputField required label="Title" placeholder="Enter the title of the task" name="name" />
                         <div className="w-full sm:w-36">
                             <label>Status</label>
-                            <RMSelect
+                            <ReactSelect
                                 required
                                 className="mt-1 w-full"
                                 name="status_id"
@@ -58,10 +76,21 @@ function AddNewTaskForm({ refetch }: AddNewTaskFormProps) {
                             />
                         </div>
                     </div>
+                    {
+                        !activityId &&
+                        <div className="my-3">
+                            <label>Related Activity</label>
+                            <ReactSelect
+                                className="mt-1"
+                                name="activity_id"
+                                options={activitySelectOptions}
+                            />
+                        </div>
+                    }
                     <TextArea required rows={4} label="Description" name="content" placeholder="Enter a detailed description" />
                     <div className="mb-3">
                         <label>Tags</label>
-                        <RMSelect
+                        <ReactSelect
                             className="mt-1"
                             name="tags"
                             isMulti

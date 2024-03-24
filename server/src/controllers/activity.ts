@@ -14,6 +14,16 @@ const controller = {
             res.status(404).send(err)
         }
     },
+    selectAllNameAndIdOnly: async (req: Request, res: Response) => {
+        try {
+            const result = await Activity.selectAllNameAndIdOnly()
+            if (result.success) {
+                res.status(200).send(result.data)
+            }
+        } catch (err) {
+            res.status(404).send(err)
+        }
+    },
     selectById: async (req: Request, res: Response) => {
         try {
             const id = req.params.id

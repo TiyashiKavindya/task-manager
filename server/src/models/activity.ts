@@ -26,6 +26,11 @@ const Activity = {
         LEFT JOIN activity_tag atag ON a.id = atag.activity_id WHERE a.id = ? GROUP BY a.id
         `, [id])
     },
+
+    selectAllNameAndIdOnly: () => {
+        return db.query('SELECT id, title FROM activity')
+    },
+
     create: (data: any[]) => {
         return db.query('INSERT INTO activity (title, description, url, start_date, end_date, status_id, activity_type_id) VALUES (?, ?, ?, ?, ?, ?, ?)', data)
     },

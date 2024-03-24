@@ -52,3 +52,11 @@ export const getActivities = async () => {
 export const getActivity = async (id: number) => {
     return await axios.get(`/activity/${id}`)
 }
+
+export const getTaskByActivityId = async (id: number) => {
+    return await axios.get(`/task/activity/${id}`)
+}
+
+export const getActivitySelectOptions = async () => {
+    return await axios.get(`/activity/name_and_id_only`)
+}
