@@ -60,3 +60,15 @@ export const getTaskByActivityId = async (id: number) => {
 export const getActivitySelectOptions = async () => {
     return await axios.get(`/activity/name_and_id_only`)
 }
+
+export const deleteActivityById = async (id: number) => {
+    return await axios.delete(`/activity/${id}`)
+}
+
+export const updateActivityStatus = async (id: number, status: number | string) => {
+    return await axios.patch(`/activity/update_status/${id}`, { status })
+}
+
+export const updateActivity = async (id: number, data: any) => {
+    return await axios.patch(`/activity/${id}`, data)
+}

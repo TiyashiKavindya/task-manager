@@ -7,7 +7,7 @@ const ActivityTag = {
     delete: (id: number) => {
         return db.query('DELETE FROM activity_tag WHERE id = ?', [id])
     },
-    deleteByTaskId: (id: number) => {
+    deleteByActivityId: (id: number) => {
         return db.query('DELETE FROM activity_tag WHERE activity_id = ?', [id])
     }
 }

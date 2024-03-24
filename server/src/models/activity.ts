@@ -34,8 +34,11 @@ const Activity = {
     create: (data: any[]) => {
         return db.query('INSERT INTO activity (title, description, url, start_date, end_date, status_id, activity_type_id) VALUES (?, ?, ?, ?, ?, ?, ?)', data)
     },
+    updateActivityStatus: async (id: number, status: number | string) => {
+        return db.query('UPDATE activity SET status_id = ? WHERE id = ?', [status, id])
+    },
     update: (id: number, data: any[]) => {
-        return db.query('UPDATE activity SET name = ?, content = ?, start_date = ?, end_date = ? WHERE id = ?', [...data, id])
+        return db.query('UPDATE activity SET title = ?, description = ?, url = ?, start_date = ?, end_date = ? WHERE id = ?', [...data, id])
     },
     delete: async (id: number) => {
         return db.query('DELETE FROM activity WHERE id = ?', [id])

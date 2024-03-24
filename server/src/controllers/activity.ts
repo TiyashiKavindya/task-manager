@@ -50,17 +50,40 @@ const controller = {
             res.status(404).send(err)
         }
     },
+    updateActivityStatus: async (req: Request, res: Response) => {
+        try {
+            const id = req.params.id
+            const { status } = req.body
+            const result = await Activity.updateActivityStatus(parseInt(id), status)
+            if (result.success) {
+                res.status(200).send(result)
+            }
+        } catch (err) {
+            res.status(404).send(err)
+        }
+    },
     update: async (req: Request, res: Response) => {
-        // try {
-        //     const id = req.params.id
-        //     const { name, description, status, tagId } = req.body
-        //     const result = await db.query('UPDATE activity SET name = ?, description = ?, status = ?, tagId = ? WHERE id = ?', [name, description, status, tagId, id])
-        //     if (result.success) {
-        //         res.status(200).send('Activity updated')
-        //     }
-        // } catch (err) {
-        //     res.status(404).send(err)
-        // }
+        console.log(req.body);
+
+        try {
+            const id = req.params.id
+            const { title, description, url, start_date, end_date, tags } = req.body
+            const result = await Activity.update(parseInt(id), [title, description, nullableString(url), nullableDate(start_date), nullableDate(end_date)])
+            console.log(result);
+
+            if (result.success) {
+                if (tags.length > 0) {
+                    await ActivityTag.deleteByActivityId(parseInt(id))
+                    const promises = tags.map(async (tag_id: number) => {
+                        await ActivityTag.create([parseInt(id), tag_id])
+                    })
+                    await Promise.all(promises)
+                }
+                res.status(200).send(result)
+            }
+        } catch (err) {
+            res.status(404).send(err)
+        }
     },
     delete: async (req: Request, res: Response) => {
         try {

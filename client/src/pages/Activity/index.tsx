@@ -54,7 +54,7 @@ function ActivityPage() {
     <>
       <Header title="Activity" actionButtonText="Activity" actionButtonClassName="bg-sky-500 text-white hover:bg-sky-600" actionButtonIcon={<IoIosAddCircleOutline />} onActionButtonClick={() => openModal(MODAL_NAMES.ADD_ACTIVITY)} />
       <Modal name={MODAL_NAMES.ADD_ACTIVITY} title="Add New Activity" className=''>
-        <AddNewActivityForm refetch={() => { }} />
+        <AddNewActivityForm refetch={refetch} />
       </Modal>
       <div className="flex border-b min-h-10 gap-6 max-w-[275px] sm:max-w-[350px] md:max-w-[600px] lg:max-w-[1000px] xl:max-w-[1200px] overflow-x-scroll no-scrollbar">
         <button
@@ -76,7 +76,7 @@ function ActivityPage() {
             {
               filterdActivities.length > 0 ? filterdActivities.map((task: any) => (
                 <ActivityCard key={task.id} data={task}
-                // refetch={refetch}
+                  refetch={refetch}
                 />
               )) : <div className="text-center text-gray-400">No Activity</div>
             }

@@ -7,7 +7,8 @@ router.get('/', controller.selectAll)
 router.get('/name_and_id_only', controller.selectAllNameAndIdOnly)
 router.get('/:id', controller.selectById)
 router.post('/', controller.create)
-router.put('/:id', controller.update)
+router.patch('/update_status/:id', controller.updateActivityStatus)
+router.patch('/:id', controller.update)
 router.delete('/:id', controller.delete)
 
 export default router

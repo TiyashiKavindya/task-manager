@@ -1,4 +1,4 @@
-import { updateStatus } from "../../api";
+import { updateActivityStatus } from "../../api";
 import DropDown from "../DropDown";
 import { useAppContext, useDataContext } from "../../contexts";
 import { convertDateFormat, makeAsOptions } from "../../utils";
@@ -16,16 +16,16 @@ function ActivityCard({ data, refetch }: ActivityCardProps) {
 
     const handleUpdateStatus = async (id: number, value: number | string) => {
         try {
-            const res = await updateStatus(id, value)
+            const res = await updateActivityStatus(id, value)
             if (res.data.success) {
                 refetch && refetch()
-                toast('Status Changed', 'Task status updated successfully.')
+                toast('Status Changed', 'Activity status updated successfully.')
             } else {
-                toast('Status Change Failed 1', 'Task status update failed. Please try again.')
+                toast('Status Change Failed 1', 'Activity status update failed. Please try again.')
             }
         } catch (err) {
             console.log(err)
-            toast('Status Change Failed', 'Task status update failed. Please try again.')
+            toast('Status Change Failed', 'Activity status update failed. Please try again.')
         }
     }
 
@@ -46,38 +46,17 @@ function ActivityCard({ data, refetch }: ActivityCardProps) {
     }
 
     return (
-        <div className="bg-white h-56 md:h-40 p-4 rounded-lg border border-gray-500 flex flex-col justify-between gap-3">
+        <div className="bg-white h-56 md:h-40 p-4 rounded-lg  border border-gray-500 flex flex-col justify-between gap-3">
             <div className="flex flex-col md:flex-row gap-2 justify-between items-center">
                 <div className="">
                     <h1 className="flex-grow text-center md:text-left text-xl font-bold line-clamp-2 text-ellipsis mb-1">{data.title}</h1>
-                    <div className="flex gap-4 items-center justify-center md:justify-start">{dateEl(data.start_date, data.end_date)} <p className="text-sm px-2 py-1 border-2 rounded-full">{data.activity_type} </p></div>
+                    <div className="flex gap-4 items-center justify-center md:justify-start">{dateEl(data.start_date, data.end_date)}</div>
                 </div>
-                <div className="flex items-center md:items-start flex-col gap-1">
-                    <p className="text-xs text-gray-500">Assigned tasks</p>
-                    <h1>0 Tasks</h1>
+                <div className="flex items-center justify-center md:items-start flex-col gap-1">
+                    <p className="text-xs text-gray-500">Activity Type</p>
+                    <p className="text-sm w-full text-center px-2 py-1 border-2 rounded-full">{data.activity_type} </p>
                 </div>
             </div>
-            {/* {
-                data.tags ?
-                    <div className="flex flex-wrap gap-2">
-                        {data.tags.map((id: number) => {
-                            const tag = getTagInfoById(id)
-                            return tag && <Tag key={tag.id} text={tag.name} color={tag.color} />
-                        })}
-                    </div>
-                    : <></>
-            } */}
-            {/* <div className="flex-grow overflow-y-auto no-scrollbar">
-                <p className="text-sm line-clamp-1 text-ellipsis text-gray-500">{data.description} </p>
-            </div> */}
-            {/* <div className="">
-                {
-                    data.url ? <>
-                        <p className="text-sm text-gray-500">Related Link: <a href={data.url} target="_blank" className="text-sm text-ellipsis text-blue-500">{data.url} </a></p>
-                        
-                    </> : <></>
-                }
-            </div> */}
             <div className="flex justify-between items-center">
 
                 <DropDown options={makeAsOptions(statuses, 'title', 'id')} onChange={(value) => handleUpdateStatus(data.id, value)}>

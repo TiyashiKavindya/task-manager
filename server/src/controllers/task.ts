@@ -56,10 +56,7 @@ const controller = {
         try {
             const id = req.params.id
             const { name, content, start_date, end_date, tags } = req.body
-            console.log(tags);
             const result = await Task.update(parseInt(id), [name, content, new Date(start_date), new Date(end_date)])
-            console.log(result);
-
             if (result.success) {
                 if (tags.length > 0) {
                     await TaskTag.deleteByTaskId(parseInt(id))
