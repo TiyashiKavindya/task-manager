@@ -55,7 +55,6 @@ const useAxios = () => {
     }
 
     useEffect(() => {
-        console.log(controller)
         return () => controller && controller.abort()
     }, [controller])
 

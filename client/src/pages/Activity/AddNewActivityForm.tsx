@@ -38,8 +38,6 @@ function AddNewActivityForm({ refetch }: AddNewActivityFormProps) {
         e.preventDefault()
         const formData = Object.fromEntries(new FormData(e.currentTarget))
         const tags = multiSelectValue.map(o => o.value)
-        console.log({ ...formData, tags });
-
         try {
             const res = await saveActivity({ ...formData, tags })
             if (res.data.success) {

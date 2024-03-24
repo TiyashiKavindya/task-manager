@@ -63,14 +63,10 @@ const controller = {
         }
     },
     update: async (req: Request, res: Response) => {
-        console.log(req.body);
-
         try {
             const id = req.params.id
             const { title, description, url, start_date, end_date, tags } = req.body
             const result = await Activity.update(parseInt(id), [title, description, nullableString(url), nullableDate(start_date), nullableDate(end_date)])
-            console.log(result);
-
             if (result.success) {
                 if (tags.length > 0) {
                     await ActivityTag.deleteByActivityId(parseInt(id))
