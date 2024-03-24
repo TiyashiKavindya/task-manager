@@ -48,3 +48,7 @@ export const saveActivity = async (data: any) => {
 export const getActivities = async () => {
     return await axios.get('/activity')
 }
+
+export const getActivity = async (id: number) => {
+    return await axios.get(`/activity/${id}`)
+}

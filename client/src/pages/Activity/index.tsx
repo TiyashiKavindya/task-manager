@@ -35,6 +35,7 @@ function ActivityPage() {
         stopLoading()
       } catch (err) {
         console.log(err);
+        stopLoading(err)
       }
     }
     getAllTask()

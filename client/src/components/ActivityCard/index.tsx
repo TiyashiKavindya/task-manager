@@ -1,4 +1,3 @@
-import Tag from "../Tag";
 import { updateStatus } from "../../api";
 import DropDown from "../DropDown";
 import { useAppContext, useDataContext } from "../../contexts";
@@ -6,15 +5,14 @@ import { convertDateFormat, makeAsOptions } from "../../utils";
 import { MdNavigateNext, MdOutlineChangeCircle } from "react-icons/md";
 import { Link } from "react-router-dom";
 
-type TaskCardProps = {
+type ActivityCardProps = {
     data: any
     refetch?: () => void
 }
 
-function TaskCard({ data, refetch }: TaskCardProps) {
+function ActivityCard({ data, refetch }: ActivityCardProps) {
     const { toast } = useAppContext()
-    const { statuses, getTagInfoById } = useDataContext()
-    console.log(data);
+    const { statuses } = useDataContext()
 
     const handleUpdateStatus = async (id: number, value: number | string) => {
         try {
@@ -99,4 +97,4 @@ function TaskCard({ data, refetch }: TaskCardProps) {
     )
 }
 
-export default TaskCard
+export default ActivityCard
