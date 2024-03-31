@@ -8,6 +8,10 @@ export default {
     extend: {
       colors: {
         'dark': '#181818',
+        'dark-light': '#212121',
+        'light': '#ffffff',
+        'primary': '#10b981',
+
       }
     },
   },

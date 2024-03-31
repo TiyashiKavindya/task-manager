@@ -1,6 +1,6 @@
 import { useAppContext } from '../../contexts'
 import { FcHighPriority } from "react-icons/fc";
-import '../../loading.scss'
+import LoadingEl from '../LoadingEl';
 
 type LoadingProps = {
     children?: React.ReactNode
@@ -10,9 +10,7 @@ function Loading({ children }: LoadingProps) {
     const { isLoading, error } = useAppContext()
     if (isLoading) {
         return (
-            <div className='min-h-56 h-full w-full grid place-items-center'>
-                <span className="loader border-2 border-emerald-500 after:border-2 after:border-emerald-500"></span>
-            </div>
+            <LoadingEl />
         )
     } else {
         if (error) {

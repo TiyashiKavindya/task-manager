@@ -31,7 +31,7 @@ function DropDown({ children, options, onChange }: DropdownProps) {
                         <button key={option.value} onClick={() => {
                             onChange(option.value)
                             handleShow()
-                        }} className="w-full text-left text-nowrap pb-2 pt-1 px-3 hover:bg-gray-100 cursor-pointer">
+                        }} className="w-full text-left text-dark text-nowrap pb-2 pt-1 px-3 hover:bg-gray-100 cursor-pointer">
                             {option.label}
                         </button>
                     ))

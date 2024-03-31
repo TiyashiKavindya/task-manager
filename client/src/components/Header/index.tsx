@@ -18,7 +18,7 @@ function Header({ title, actionButtonClassName, onActionButtonClick, actionButto
                 <div>
                     {
                         title && <>
-                            <p className="text-2xl font-semibold text-dark">{title}</p>
+                            <p className="text-2xl font-semibold text-light">{title}</p>
                         </>
                     }
                 </div>

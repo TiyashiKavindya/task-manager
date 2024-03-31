@@ -33,10 +33,10 @@ function TaskCard({ data, onEditAction, onDeleteAction, refetch }: TaskCardProps
     }
 
     return (
-        <div className="bg-white h-80 p-4 rounded-lg border border-gray-500 flex flex-col justify-between gap-3">
+        <div className="bg-dark-light/90 shadow-xl hover:bg-dark-light ease-in-out duration-200 text-light h-80 p-4 rounded-lg border border-dark/50 flex flex-col justify-between gap-3">
             <div className="">
                 <h1 className="text-lg font-bold line-clamp-2 text-ellipsis">{data.name}</h1>
-                <p className="text-sm text-gray-500">{convertDateFormat(data.start_date, '/')} to {convertDateFormat(data.end_date, '/')}</p>
+                <p className="text-sm text-gray-300">{convertDateFormat(data.start_date, '/')} to {convertDateFormat(data.end_date, '/')}</p>
             </div>
             <div className="flex flex-wrap gap-2">
                 {
@@ -49,12 +49,12 @@ function TaskCard({ data, onEditAction, onDeleteAction, refetch }: TaskCardProps
                 }
             </div>
             <div className="flex-grow overflow-y-auto no-scrollbar">
-                <p className="text-sm text-ellipsis text-gray-500">{data.content} </p>
+                <p className="text-sm text-ellipsis text-gray-200">{data.content} </p>
             </div>
             <div className="flex justify-between items-center">
 
                 <DropDown options={makeAsOptions(statuses, 'title', 'id')} onChange={(value) => handleUpdateStatus(data.id, value)}>
-                    <div className=" w-36 flex items-center justify-between border-2 rounded-full" style={{ backgroundColor: data.status_style }} >
+                    <div className=" w-36 flex items-center justify-between rounded-full" style={{ backgroundColor: data.status_style }} >
                         <div className="h-8 w-8 text-md rounded-full flex justify-center items-center bg-white" style={{ color: data.status_style }}>
                             <MdOutlineChangeCircle className="" />
                         </div>

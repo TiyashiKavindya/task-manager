@@ -52,19 +52,19 @@ function ActivityPage() {
 
   return (
     <>
-      <Header title="Activity" actionButtonText="Activity" actionButtonClassName="bg-sky-500 text-white hover:bg-sky-600" actionButtonIcon={<IoIosAddCircleOutline />} onActionButtonClick={() => openModal(MODAL_NAMES.ADD_ACTIVITY)} />
+      <Header title="Activities" actionButtonText="Activity" actionButtonClassName="bg-primary/90 text-white hover:bg-primary" actionButtonIcon={<IoIosAddCircleOutline />} onActionButtonClick={() => openModal(MODAL_NAMES.ADD_ACTIVITY)} />
       <Modal name={MODAL_NAMES.ADD_ACTIVITY} title="Add New Activity" className=''>
         <AddNewActivityForm refetch={refetch} />
       </Modal>
-      <div className="flex border-b min-h-10 gap-6 max-w-[275px] sm:max-w-[350px] md:max-w-[600px] lg:max-w-[1000px] xl:max-w-[1200px] overflow-x-scroll no-scrollbar">
+      <div className="flex min-h-10 gap-6 max-w-[275px] sm:max-w-[350px] md:max-w-[600px] lg:max-w-[1000px] xl:max-w-[1200px] overflow-x-scroll no-scrollbar">
         <button
-          className={`mix-blend-normal border-b-2 pb-3 hover:text-emerald-500 hover:border-emerald-500 duration-300 ease-in-out text-nowrap ${activeFilter === 'All' ? 'text-emerald-500 border-emerald-500' : 'border-transparent'}`}
+          className={`mix-blend-normal border-b-2 pb-3 hover:text-primary hover:border-primary duration-300 ease-in-out text-nowrap ${activeFilter === 'All' ? 'text-primary border-primary' : 'border-transparent'}`}
           onClick={() => setActiveFilter('All')}
         >All</button>
         {
           statuses.length > 0 && statuses.map((status: any) => (
             <button key={status.id}
-              className={`mix-blend-normal border-b-2 pb-3 hover:text-emerald-500 hover:border-emerald-500 duration-300 ease-in-out text-nowrap ${activeFilter === status.title ? 'text-emerald-500 border-emerald-500' : 'border-transparent'}`}
+              className={`mix-blend-normal border-b-2 pb-3 hover:text-primary hover:border-primary duration-300 ease-in-out text-nowrap ${activeFilter === status.title ? 'text-primary border-primary' : 'border-transparent'}`}
               onClick={() => setActiveFilter(status.title)}
             >{status.title}</button>
           ))

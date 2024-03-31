@@ -66,22 +66,22 @@ function TaskPage() {
 
   return (
     <>
-      <Header title="Task" actionButtonText="Task" actionButtonClassName="bg-emerald-500 text-white hover:bg-emerald-600" actionButtonIcon={<IoIosAddCircleOutline />} onActionButtonClick={() => openModal(MODAL_NAMES.ADD_TASK)} />
+      <Header title="Tasks" actionButtonText="Task" actionButtonClassName="bg-primary/90 text-white hover:bg-primary" actionButtonIcon={<IoIosAddCircleOutline />} onActionButtonClick={() => openModal(MODAL_NAMES.ADD_TASK)} />
       <Modal name={MODAL_NAMES.ADD_TASK} title="Add New Task">
         <AddNewTaskForm refetch={refetch} />
       </Modal>
       <Modal name={MODAL_NAMES.EDIT_TASK} title="Edit Task">
         <EditTaskForm defaultValues={taskToEdit} refetch={refetch} />
       </Modal>
-      <div className="flex border-b min-h-10 gap-6 max-w-[275px] sm:max-w-[350px] md:max-w-[600px] lg:max-w-[1000px] xl:max-w-[1200px] overflow-x-scroll no-scrollbar">
+      <div className="flex min-h-10 gap-6 max-w-[275px] sm:max-w-[350px] md:max-w-[600px] lg:max-w-[1000px] xl:max-w-[1200px] overflow-x-scroll no-scrollbar">
         <button
-          className={`mix-blend-normal border-b-2 pb-3 hover:text-emerald-500 hover:border-emerald-500 duration-300 ease-in-out text-nowrap ${activeFilter === 'All' ? 'text-emerald-500 border-emerald-500' : 'border-transparent'}`}
+          className={`mix-blend-normal border-b-2 pb-3 hover:text-primary hover:border-primary duration-300 ease-in-out text-nowrap ${activeFilter === 'All' ? 'text-primary border-primary' : 'border-transparent'}`}
           onClick={() => setActiveFilter('All')}
         >All</button>
         {
           statuses.length > 0 && statuses.map((status: any) => (
             <button key={status.id}
-              className={`mix-blend-normal border-b-2 pb-3 hover:text-emerald-500 hover:border-emerald-500 duration-300 ease-in-out text-nowrap ${activeFilter === status.title ? 'text-emerald-500 border-emerald-500' : 'border-transparent'}`}
+              className={`mix-blend-normal border-b-2 pb-3 hover:text-primary hover:border-primary duration-300 ease-in-out text-nowrap ${activeFilter === status.title ? 'text-primary border-primary' : 'border-transparent'}`}
               onClick={() => setActiveFilter(status.title)}
             >{status.title}</button>
           ))
@@ -109,7 +109,7 @@ function TaskPage() {
                 refetch={refetch}
               />
             ))}
-            <button onClick={() => openModal(MODAL_NAMES.ADD_TASK)} type="button" className=" h-80 p-4 rounded-lg border-2 border-gray-300 border-dashed flex justify-center items-center gap-4 cursor-pointer hover:bg-white duration-300 ease-in-out">
+            <button onClick={() => openModal(MODAL_NAMES.ADD_TASK)} type="button" className=" h-80 p-4 rounded-lg border-2 border-gray-300 border-dashed flex justify-center items-center gap-4 cursor-pointer hover:bg-dark-light duration-300 ease-in-out">
               <MdAdd className="text-3xl" />
               <p className="">Add New Task</p>
             </button>

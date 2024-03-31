@@ -103,8 +103,8 @@ function AddNewActivityForm({ refetch }: AddNewActivityFormProps) {
                         <DatePicker name="end_date" label="Due Date (optional)" />
                     </div>
                     <div className="mt-4 flex justify-between items-center">
-                        <button type="button" onClick={closeModal} className="btn border-2 border-emerald-500 text-emerald-500">Cancel</button>
-                        <button type="submit" className="btn border-2 border-emerald-500 bg-emerald-500 text-white hover:bg-emerald-600 ">Save</button>
+                        <button type="button" onClick={closeModal} className="btn border-2 border-dark text-dark">Cancel</button>
+                        <button type="submit" className="btn border-2 border-light bg-dark text-white hover:bg-dark-light">Save</button>
                     </div>
                 </form>
             </Loading>
