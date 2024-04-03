@@ -3,7 +3,7 @@ import { useAppContext } from "../../contexts";
 
 type HeaderProps = {
     title?: string
-    actionButtonText: string
+    actionButtonText?: string
     actionButtonIcon?: React.ReactNode
     onActionButtonClick?: () => void
     actionButtonClassName?: string

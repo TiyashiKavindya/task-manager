@@ -72,3 +72,15 @@ export const updateActivityStatus = async (id: number, status: number | string) 
 export const updateActivity = async (id: number, data: any) => {
     return await axios.patch(`/activity/${id}`, data)
 }
+
+export const getTodayTasks = async () => {
+    return await axios.get('/task/today')
+}
+
+export const getThisWeekTaskCount = async () => {
+    return await axios.get('/task/thisWeekTaskCount')
+}
+
+export const getTaskCountPreDay = async () => {
+    return await axios.get('/task/taskCountPreDay')
+}

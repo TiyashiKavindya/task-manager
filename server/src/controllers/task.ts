@@ -36,6 +36,36 @@ const controller = {
             res.status(404).send(err)
         }
     },
+    selectToday: async (req: Request, res: Response) => {
+        try {
+            const result = await Task.selectToday()
+            if (result.success) {
+                res.status(200).send(result.data)
+            }
+        } catch (err) {
+            res.status(404).send(err)
+        }
+    },
+    thisWeekTaskCount: async (req: Request, res: Response) => {
+        try {
+            const result = await Task.thisWeekTaskCount()
+            if (result.success) {
+                res.status(200).send(result.data)
+            }
+        } catch (err) {
+            res.status(404).send(err)
+        }
+    },
+    taskCountPreDay: async (req: Request, res: Response) => {
+        try {
+            const result = await Task.taskCountPreDay()
+            if (result.success) {
+                res.status(200).send(result.data)
+            }
+        } catch (err) {
+            res.status(404).send(err)
+        }
+    },
     create: async (req: Request, res: Response) => {
         try {
             const { name, content, status_id, start_date, end_date, activity_id, tags } = req.body

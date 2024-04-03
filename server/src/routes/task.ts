@@ -4,6 +4,9 @@ import controller from '../controllers/task'
 const router = express.Router()
 
 router.get('/', controller.selectAll)
+router.get('/today', controller.selectToday)
+router.get('/thisWeekTaskCount', controller.thisWeekTaskCount)
+router.get('/taskCountPreDay', controller.taskCountPreDay)
 router.get('/:id', controller.selectById)
 router.get('/activity/:id', controller.selectByActivity)
 router.post('/', controller.create)

@@ -27,6 +27,46 @@ const Task = {
     selectById: (id: number) => {
         return db.query('SELECT * FROM task WHERE id = ?', [id])
     },
+    selectToday: () => {
+        return db.query('SELECT task.id, task.name, status.title as status, status.style FROM task INNER JOIN status ON task.status_id = status.id WHERE DATE(start_date) = CURDATE()')
+    },
+    thisWeekTaskCount: () => {
+        return db.query(`
+        SELECT 
+        task.status_id,
+        COUNT(task.id) AS task_count
+        FROM 
+        task
+        WHERE 
+        start_date >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY) AND
+        start_date < DATE_ADD(DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 1 WEEK) AND
+        task.status_id IN (2, 3, 4)
+        GROUP BY 
+        task.status_id
+        `)
+    },
+    taskCountPreDay: () => {
+        return db.query(`
+        SELECT 
+            DAYNAME(task.start_date) AS day_of_week,
+            task.status_id,
+            status.title AS status,
+            status.style,
+            COUNT(*) AS task_count
+        FROM 
+            task
+        INNER JOIN status ON status.id = task.status_id
+        WHERE 
+            task.start_date >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY) AND
+            task.start_date < DATE_ADD(DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 1 WEEK) AND
+            status.id IN (2, 3, 4)
+        GROUP BY 
+            day_of_week, task.status_id
+        ORDER BY 
+            FIELD(day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), task.status_id;
+        
+        `)
+    },
     create: (data: any[]) => {
         return db.query('INSERT INTO task (name, content, status_id, start_date, end_date, activity_id) VALUES (?, ?, ?, ?, ?, ?)', data)
     },
