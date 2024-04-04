@@ -84,3 +84,15 @@ export const getThisWeekTaskCount = async () => {
 export const getTaskCountPreDay = async () => {
     return await axios.get('/task/taskCountPreDay')
 }
+
+export const getThisMonthActivity = async () => {
+    return await axios.get('/task/thisMonthActivityStats')
+}
+
+export const getThisMonthActivityByStatus = async () => {
+    return await axios.get('/activity/thisMonthActivityByStatus')
+}
+
+export const getThisMonthTask = async () => {
+    return await axios.get('/task/thisMonthTaskStats')
+}

@@ -26,11 +26,22 @@ const Activity = {
         LEFT JOIN activity_tag atag ON a.id = atag.activity_id WHERE a.id = ? GROUP BY a.id
         `, [id])
     },
-
+    getThisMonthActivityByStatus: () => {
+        return db.query(`
+        SELECT 
+        activity.status_id, 
+        COUNT(*) AS total_activities,
+        status.title AS status_title, 
+        status.style AS status_style
+        FROM activity
+        INNER JOIN status ON activity.status_id = status.id
+        WHERE MONTH(activity.start_date) = MONTH(CURRENT_DATE()) AND YEAR(activity.start_date) = YEAR(CURRENT_DATE())
+        GROUP BY activity.status_id;
+        `)
+    },
     selectAllNameAndIdOnly: () => {
         return db.query('SELECT id, title FROM activity')
     },
-
     create: (data: any[]) => {
         return db.query('INSERT INTO activity (title, description, url, start_date, end_date, status_id, activity_type_id) VALUES (?, ?, ?, ?, ?, ?, ?)', data)
     },

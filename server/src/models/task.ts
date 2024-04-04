@@ -67,6 +67,43 @@ const Task = {
         
         `)
     },
+    getThisMonthTaskStats: () => {
+        return db.query(`
+        SELECT 
+            DATE(task.start_date) AS start_date,
+            task.status_id,
+            status.title AS status,
+            status.style,
+            COUNT(*) AS task_count
+        FROM 
+            task
+        INNER JOIN status ON status.id = task.status_id
+        WHERE 
+            YEAR(task.start_date) = YEAR(CURDATE()) AND
+            MONTH(task.start_date) = MONTH(CURDATE())
+        GROUP BY 
+            start_date, task.status_id
+        ORDER BY 
+            start_date, task.status_id;
+        `)
+    },
+    getThisMonthActivityStats: () => {
+        return db.query(`
+        SELECT 
+            task.activity_id,
+            task.status_id,
+            status.title AS status_title,
+            status.style as status_style,
+            COUNT(*) AS total_tasks,
+            activity.title
+        FROM task
+        INNER JOIN activity ON task.activity_id = activity.id
+        INNER JOIN status ON task.status_id = status.id
+        WHERE MONTH(task.start_date) = MONTH(CURRENT_DATE()) AND YEAR(task.start_date) = YEAR(CURRENT_DATE())
+        GROUP BY 
+            task.activity_id, task.status_id;        
+        `)
+    },
     create: (data: any[]) => {
         return db.query('INSERT INTO task (name, content, status_id, start_date, end_date, activity_id) VALUES (?, ?, ?, ?, ?, ?)', data)
     },

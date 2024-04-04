@@ -66,6 +66,26 @@ const controller = {
             res.status(404).send(err)
         }
     },
+    getThisMonthActivityStats: async (req: Request, res: Response) => {
+        try {
+            const result = await Task.getThisMonthActivityStats()
+            if (result.success) {
+                res.status(200).send(result.data)
+            }
+        } catch (err) {
+            res.status(404).send(err)
+        }
+    },
+    getThisMonthTaskStats: async (req: Request, res: Response) => {
+        try {
+            const result = await Task.getThisMonthTaskStats()
+            if (result.success) {
+                res.status(200).send(result.data)
+            }
+        } catch (err) {
+            res.status(404).send(err)
+        }
+    },
     create: async (req: Request, res: Response) => {
         try {
             const { name, content, status_id, start_date, end_date, activity_id, tags } = req.body

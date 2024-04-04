@@ -36,6 +36,16 @@ const controller = {
         }
 
     },
+    getThisMonthActivityByStatus: async (req: Request, res: Response) => {
+        try {
+            const result = await Activity.getThisMonthActivityByStatus()
+            if (result.success) {
+                res.status(200).send(result.data)
+            }
+        } catch (err) {
+            res.status(404).send(err)
+        }
+    },
     create: async (req: Request, res: Response) => {
         try {
             const { title, description, url, start_date, end_date, status_id, activity_type_id, tags } = req.body

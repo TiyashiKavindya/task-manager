@@ -7,6 +7,7 @@ import {
     Title,
     Tooltip,
     Legend,
+    TimeScale
 } from 'chart.js'
 
 ChartJS.register(
@@ -15,7 +16,8 @@ ChartJS.register(
     BarElement,
     Title,
     Tooltip,
-    Legend
+    Legend,
+    TimeScale
 )
 
 type BarChartProps = {
@@ -23,7 +25,7 @@ type BarChartProps = {
     data: any
 }
 
-function BarChart({options, data}: BarChartProps) {
+function BarChart({ options, data }: BarChartProps) {
     return (
         <Bar options={options} data={data} />
     )

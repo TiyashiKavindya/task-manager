@@ -71,7 +71,6 @@ function Dashboard() {
                 }
             });
         });
-
         return chartData;
     }
 
