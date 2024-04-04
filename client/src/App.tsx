@@ -6,6 +6,7 @@ import ContextProvider from "./contexts"
 import Toast from "./components/Toast"
 import Confirm from "./components/Confirm"
 import SingleActiviy from "./pages/SingleActivity"
+import Settings from "./pages/settings"
 
 function App() {
   return (
@@ -21,6 +22,7 @@ function App() {
                 ))
               }
               <Route path="/activity/:id" element={<SingleActiviy />} />
+              <Route path="/settings" element={<Settings />} />
             </Routes>
           </Content>
           <Confirm />
