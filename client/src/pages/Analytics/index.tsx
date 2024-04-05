@@ -6,6 +6,7 @@ import Scrollable from '../../components/Scrollable'
 import { useAppContext } from '../../contexts'
 import { getThisMonthActivity, getThisMonthActivityByStatus, getThisMonthTask } from '../../api'
 import Loading from '../../components/Loading'
+import { MONTH_NAMES } from '../../constants'
 
 
 interface ChartData {
@@ -44,7 +45,6 @@ function AnalyticsPage() {
     const [activityVsStatus, setActivityVsStatus] = useState<ChartData>()
     const [thisMonthActivity, setThisMonthActivity] = useState<ChartData>()
     const [thisMonthTask, setThisMonthTask] = useState<any>()
-
 
     const convertToPieChart = (data: any) => {
         const chartData: ChartData = {
@@ -127,7 +127,6 @@ function AnalyticsPage() {
         }
     }
 
-
     useEffect(() => {
         const getData = async () => {
             try {
@@ -142,6 +141,16 @@ function AnalyticsPage() {
         getData()
     }, [])
 
+    const getCurrentMonthAndYear = () => {
+        const currentDate = new Date();
+        const monthIndex = currentDate.getMonth();
+        const monthName = MONTH_NAMES[monthIndex];
+        const year = currentDate.getFullYear();
+        return (
+            <p>{monthName}, {year}</p>
+        )
+    }
+
     return (
         <>
             <Header title="Analytics" />
@@ -149,28 +158,49 @@ function AnalyticsPage() {
                 <Scrollable>
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8">
 
-
-                        <div className="lg:col-span-3 h-96 w-full rounded-md p-4 bg-dark-light shadow">
-                            {
-                                thisMonthTask?.labels && thisMonthTask.labels.length > 0 ? <BarChart options={{
-                                    ...options,
-                                    maintainAspectRatio: false,
-
-
-                                }} data={thisMonthTask} /> : <></>
-                            }
+                        <div className="lg:col-span-3 w-full rounded-md p-6 bg-dark-light shadow">
+                            <div className="flex justify-between items-center mb-8">
+                                <div className="">
+                                    <h1 className="text-lg font-semibold text-white">Tracking Task Performance</h1>
+                                    <p className='text-gray-400 text-sm'>Visualizing Daily Task Counts Across Statuses Throughout the Current Month.</p>
+                                </div>
+                                {getCurrentMonthAndYear()}
+                            </div>
+                            <div className=" h-96">
+                                {
+                                    thisMonthTask?.labels && thisMonthTask.labels.length > 0 ? <BarChart options={{
+                                        ...options,
+                                        maintainAspectRatio: false,
+                                    }} data={thisMonthTask} /> : <></>
+                                }
+                            </div>
                         </div>
 
-                        <div className="lg:col-span-2 w-full rounded-md p-4 bg-dark-light shadow">
-                            {
-                                thisMonthActivity?.labels && thisMonthActivity.labels.length > 0 ? <BarChart options={options} data={thisMonthActivity} /> : <></>
-                            }
+                        <div className="lg:col-span-2 w-full rounded-md p-6 bg-dark-light shadow">
+                            <div className="flex justify-between items-center mb-8">
+                                <div>
+                                    <h1 className="text-lg font-semibold text-white">Activity Analysis</h1>
+                                    <p className='text-gray-400 text-sm'>Exploring Task Counts by Status Across Activities Throughout the Month.</p>
+                                </div>
+                                {getCurrentMonthAndYear()}
+                            </div>
+                            <div>
+                                {
+                                    thisMonthActivity?.labels && thisMonthActivity.labels.length > 0 ? <BarChart options={options} data={thisMonthActivity} /> : <></>
+                                }
+                            </div>
                         </div>
-                        <div className="w-full rounded-md p-4 bg-dark-light shadow">
-                            {
-                                activityVsStatus?.labels && activityVsStatus.labels.length > 0 ? <PieChart options={options} data={activityVsStatus} /> : <></>
 
-                            }
+                        <div className="w-full rounded-md p-6 bg-dark-light shadow">
+                            <div className="mb-8">
+                                <h1 className="text-lg font-semibold text-white">Activity Status Overview</h1>
+                                <p className='text-gray-400 text-sm'>Distribution of Total Activities by Status.</p>
+                            </div>
+                            <div>
+                                {
+                                    activityVsStatus?.labels && activityVsStatus.labels.length > 0 ? <PieChart options={options} data={activityVsStatus} /> : <></>
+                                }
+                            </div>
                         </div>
                     </div>
                 </Scrollable>

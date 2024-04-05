@@ -23,3 +23,5 @@ export const MODAL_NAMES = {
     EDIT_ACTIVITY: 'edit-activity-form',
     TEST: 'test-modal',
 }
+
+export const MONTH_NAMES = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
