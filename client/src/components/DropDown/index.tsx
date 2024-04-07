@@ -25,7 +25,7 @@ function DropDown({ children, options, onChange }: DropdownProps) {
     return (
         <div className="relative" ref={dropdownRef}>
             <button onClick={handleShow}>{children}</button>
-            <div className={`absolute top-11 left-0 min-w-28 h-36 overflow-y-auto no-scrollbar rounded-lg bg-white shadow-lg border flex-col items-start justify-start ${show ? 'flex' : 'hidden'}`}>
+            <div className={`absolute top-11 z-50 left-0 min-w-28 h-36 overflow-y-auto no-scrollbar rounded-lg bg-white shadow-lg border flex-col items-start justify-start ${show ? 'flex' : 'hidden'}`}>
                 {
                     options.map(option => (
                         <button key={option.value} onClick={() => {
