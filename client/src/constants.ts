@@ -21,9 +21,6 @@ export const MODAL_NAMES = {
     EDIT_TASK: 'edit-task-form',
     ADD_ACTIVITY: 'add-activity-form',
     EDIT_ACTIVITY: 'edit-activity-form',
-    ADD_STATUS: 'add-status-form',
-    ADD_TAG: 'add-tag-form',
-    ADD_ACTIVITY_TYPE: 'add-activity-type-form',
     TEST: 'test-modal',
 }
 
