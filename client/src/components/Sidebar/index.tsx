@@ -3,7 +3,6 @@ import { AiOutlineClose } from "react-icons/ai";
 import { Fragment } from "react/jsx-runtime";
 import { ROUTES } from "../../routes";
 import { useAppContext } from "../../contexts";
-import { IoSettingsOutline } from "react-icons/io5";
 
 function Sidebar() {
     const { showSidebar, closeSidebar } = useAppContext()
@@ -30,12 +29,6 @@ function Sidebar() {
                             ))
                         }
 
-                    </div>
-                    <div className="mb-4">
-                        <Link to="/settings" onClick={closeSidebar} className="flex gap-4 items-center py-2 px-3 rounded-lg hover:bg-primary hover:text-white duration-150 ease-in-out">
-                            <IoSettingsOutline />
-                            <p className="">Settings</p>
-                        </Link>
                     </div>
                 </div>
             </div>
