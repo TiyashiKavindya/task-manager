@@ -96,7 +96,7 @@ const controller = {
             const id = req.params.id
             const result = await Activity.delete(parseInt(id))
             if (result.success) {
-                res.status(200).send('Activity deleted')
+                res.status(200).send(result)
             }
         } catch (err) {
             res.status(404).send(err)

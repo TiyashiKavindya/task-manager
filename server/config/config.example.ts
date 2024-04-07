@@ -1,7 +1,7 @@
-// express server configuration
+// !IMPORTANT: Rename this file to config.ts after setting up the database configuration
+
 export const SERVER_PORT = 5400
 
-// MySQL server configuration
 export const DATABASE = {
     host: "Database host",
     database: "Database name",

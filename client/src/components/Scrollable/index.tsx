@@ -1,4 +1,3 @@
-
 type ScrollableProps = {
     children: React.ReactNode
 }
@@ -15,4 +14,4 @@ function Scrollable({ children }: ScrollableProps) {
     )
 }
 
-export default Scrollable;
+export default Scrollable

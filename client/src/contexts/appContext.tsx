@@ -1,10 +1,10 @@
 /* eslint-disable react-refresh/only-export-components */
 import { useContext, useEffect, useState } from "react"
-import { createContext } from "react";
-import { TOAST_TIMEOUT } from "../constants";
-import { ContextProviderProps } from "../types";
+import { createContext } from "react"
+import { TOAST_TIMEOUT } from "../constants"
+import { ContextProviderProps } from "../types"
 
-export const Context = createContext<any>({});
+export const Context = createContext<any>({})
 
 export const useAppContext = () => {
     const store = useContext(Context)
@@ -79,8 +79,6 @@ function AppContextProvider({ children }: ContextProviderProps) {
     const hideConfirm = () => {
         setConfirmAlert({ show: false, title: '', message: '', okText: 'Ok', onOk: () => { }, cancelText: 'Cancel', onCencel: () => { } })
     }
-
-
 
     return (
         <Context.Provider value={{

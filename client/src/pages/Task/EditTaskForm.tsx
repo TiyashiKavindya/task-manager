@@ -6,7 +6,7 @@ import Loading from "../../components/Loading"
 import { useAppContext, useDataContext } from "../../contexts"
 import { updateTasks } from "../../api"
 import { convertDateFormat, makeAsOptions } from "../../utils"
-import Select, { MultiValue } from 'react-select';
+import Select, { MultiValue } from 'react-select'
 import { SelectOption } from "../../types"
 
 type EditTaskFormProps = {
@@ -44,10 +44,23 @@ function EditTaskForm({ defaultValues, refetch }: EditTaskFormProps) {
         return (
             <div className="px-1 max-h-[80dvh] overflow-y-auto md:w-[700px]">
                 <Loading>
-                    <form onSubmit={(e) => handleUpdate(e, defaultValues.id)} className="flex flex-col gap-2">
-                        <InputField required label="Title" placeholder="Enter the title of the task" name="name" defaultValue={defaultValues.name} />
-                        <TextArea required rows={4} label="Description" name="content" placeholder="Enter a detailed description" defaultValue={defaultValues.content} />
-                        <div className="">
+                    <form
+                        onSubmit={(e) => handleUpdate(e, defaultValues.id)}
+                        className="flex flex-col gap-2">
+                        <InputField
+                            required
+                            label="Title"
+                            placeholder="Enter the title of the task"
+                            name="name"
+                            defaultValue={defaultValues.name} />
+                        <TextArea
+                            required
+                            rows={4}
+                            label="Description"
+                            name="content"
+                            placeholder="Enter a detailed description"
+                            defaultValue={defaultValues.content} />
+                        <div>
                             <label>Tags</label>
                             <Select
                                 className="mt-1"
@@ -58,12 +71,29 @@ function EditTaskForm({ defaultValues, refetch }: EditTaskFormProps) {
                             />
                         </div>
                         <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                            <DatePicker required name="start_date" label="Start Date" defaultValue={convertDateFormat(defaultValues.start_date)} />
-                            <DatePicker required name="end_date" label="Due Date" defaultValue={convertDateFormat(defaultValues.end_date)} />
+                            <DatePicker
+                                required
+                                name="start_date"
+                                label="Start Date"
+                                defaultValue={convertDateFormat(defaultValues.start_date)} />
+                            <DatePicker
+                                required
+                                name="end_date"
+                                label="Due Date"
+                                defaultValue={convertDateFormat(defaultValues.end_date)} />
                         </div>
                         <div className="mt-4 flex justify-between items-center">
-                            <button type="button" onClick={closeModal} className="btn border-2 border-dark text-dark">Cancel</button>
-                            <button type="submit" className="btn border-2 border-light bg-dark text-white hover:bg-dark-light">Save</button>
+                            <button
+                                type="button"
+                                onClick={closeModal}
+                                className="btn border-2 border-dark text-dark">
+                                Cancel
+                            </button>
+                            <button
+                                type="submit"
+                                className="btn border-2 border-light bg-dark text-white hover:bg-dark-light">
+                                Save
+                            </button>
                         </div>
                     </form>
                 </Loading>

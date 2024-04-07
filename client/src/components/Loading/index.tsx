@@ -1,6 +1,6 @@
 import { useAppContext } from '../../contexts'
-import { FcHighPriority } from "react-icons/fc";
-import LoadingEl from '../LoadingEl';
+import { FcHighPriority } from "react-icons/fc"
+import LoadingEl from '../LoadingEl'
 
 type LoadingProps = {
     children?: React.ReactNode
@@ -9,9 +9,7 @@ type LoadingProps = {
 function Loading({ children }: LoadingProps) {
     const { isLoading, error } = useAppContext()
     if (isLoading) {
-        return (
-            <LoadingEl />
-        )
+        return <LoadingEl />
     } else {
         if (error) {
             return (

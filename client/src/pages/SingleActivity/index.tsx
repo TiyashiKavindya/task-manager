@@ -35,7 +35,7 @@ function SingleActiviy() {
             toast('Activity deleted', 'Activity deleted successfully.')
             navigate('/activity')
         } catch (err) {
-            console.log(err);
+            console.log(err)
             toast('Delete Failed', 'Failed to delete activity.')
         }
     }
@@ -46,7 +46,7 @@ function SingleActiviy() {
             toast('Task deleted', 'Task deleted successfully.')
             refetch()
         } catch (err) {
-            console.log(err);
+            console.log(err)
             toast('Delete Failed', 'Failed to delete task.')
         }
     }
@@ -113,14 +113,25 @@ function SingleActiviy() {
 
     return (
         <>
-            <Header title={`Activity`} actionButtonText="Create New Task" actionButtonClassName="bg-primary/90 text-white hover:bg-primary" actionButtonIcon={<IoIosAddCircleOutline />} onActionButtonClick={() => { openModal(MODAL_NAMES.ADD_TASK) }} />
-            <Modal name={MODAL_NAMES.ADD_TASK} title="Add New Task">
+            <Header
+                title="Activity"
+                actionButtonText="Add New Task"
+                actionButtonClassName="bg-primary/90 text-white hover:bg-primary"
+                actionButtonIcon={<IoIosAddCircleOutline />}
+                onActionButtonClick={() => { openModal(MODAL_NAMES.ADD_TASK) }} />
+            <Modal
+                name={MODAL_NAMES.ADD_TASK}
+                title="Add New Task">
                 <AddNewTaskForm activityId={id} refetch={refetch} />
             </Modal>
-            <Modal name={MODAL_NAMES.EDIT_TASK} title="Edit Task">
+            <Modal
+                name={MODAL_NAMES.EDIT_TASK}
+                title="Edit Task">
                 <EditTaskForm defaultValues={taskToEdit} refetch={refetch} />
             </Modal>
-            <Modal name={MODAL_NAMES.EDIT_ACTIVITY} title="Edit Activity">
+            <Modal
+                name={MODAL_NAMES.EDIT_ACTIVITY}
+                title="Edit Activity">
                 <EditActivityForm data={activity} refetch={refetch} />
             </Modal>
             <Scrollable>
@@ -130,40 +141,51 @@ function SingleActiviy() {
                         <div className="flex gap-4 items-center justify-center md:justify-start text-gray-300">{dateEl(activity.start_date, activity.end_date)} <p className="text-sm px-2 py-1 border-2 rounded-full">{activity.activity_type} </p></div>
                     </div>
                     <div className="flex gap-2">
-                        <button onClick={() => openModal(MODAL_NAMES.EDIT_ACTIVITY)} className="p-2 hover:bg-teal-500 hover:text-white duration-300 ease-in-out rounded-full flex items-center gap-3 px-4"><AiOutlineEdit className="text-xl" /> Edit</button>
-                        <button onClick={() => {
-                            confirm(
-                                'Are you sure you want to delete this activity?',
-                                'All task related to this activity will also be deleted. this action cannot be undone.',
-                                'Yes', () => {
-                                    deleteActivity(activity.id)
-                                },
-                                'No'
-                            )
-
-                        }} className="p-2 hover:bg-rose-500 hover:text-white duration-300 ease-in-out rounded-full flex items-center gap-3 px-4"><AiOutlineDelete className="text-xl" /> Delete</button>
+                        <button
+                            onClick={() => openModal(MODAL_NAMES.EDIT_ACTIVITY)}
+                            className="p-2 hover:bg-teal-500 hover:text-white duration-300 ease-in-out rounded-full flex items-center gap-3 px-4">
+                            <AiOutlineEdit className="text-xl" />
+                            Edit
+                        </button>
+                        <button
+                            onClick={() => {
+                                confirm(
+                                    'Are you sure you want to delete this activity?',
+                                    'All task related to this activity will also be deleted. this action cannot be undone.',
+                                    'Yes', () => {
+                                        deleteActivity(activity.id)
+                                    },
+                                    'No'
+                                )
+                            }}
+                            className="p-2 hover:bg-rose-500 hover:text-white duration-300 ease-in-out rounded-full flex items-center gap-3 px-4">
+                            <AiOutlineDelete className="text-xl" />
+                            Delete
+                        </button>
                     </div>
-
                 </div>
                 {
-                    activity.tags ?
+                    activity.tags
+                        ?
                         <div className="mb-2 flex flex-wrap gap-2">
                             {activity.tags.map((id: number) => {
                                 const tag = getTagInfoById(id)
                                 return tag && <Tag key={tag.id} text={tag.name} color={tag.color} />
                             })}
                         </div>
-                        : <></>
+                        :
+                        <></>
                 }
                 <div className="flex-grow overflow-y-auto no-scrollbar mb-2">
                     <p className="text-md text-gray-300">{activity.description} </p>
                 </div>
-                <div className="">
+                <div>
                     {
-                        activity.url ? <>
+                        activity.url
+                            ?
                             <p className="text-sm text-gray-300">Related Link: <a href={activity.url} target="_blank" className="text-sm text-ellipsis text-blue-500">{activity.url} </a></p>
-
-                        </> : <></>
+                            :
+                            <></>
                     }
                 </div>
                 <div className="mt-6 py-2 flex justify-between items-center border-b border-gray-600">
@@ -207,9 +229,12 @@ function SingleActiviy() {
                             refetch={refetch}
                         />
                     ))}
-                    <button onClick={() => { openModal(MODAL_NAMES.ADD_TASK) }} type="button" className=" h-80 p-4 rounded-lg border-2 border-gray-300 border-dashed flex justify-center items-center gap-4 cursor-pointer hover:bg-dark-light duration-300 ease-in-out">
+                    <button
+                        onClick={() => { openModal(MODAL_NAMES.ADD_TASK) }}
+                        type="button"
+                        className=" h-80 p-4 rounded-lg border-2 border-gray-300 border-dashed flex justify-center items-center gap-4 cursor-pointer hover:bg-dark-light duration-300 ease-in-out">
                         <MdAdd className="text-3xl" />
-                        <p className="">Add New Task</p>
+                        <p>Add New Task</p>
                     </button>
                 </div>
             </Scrollable>

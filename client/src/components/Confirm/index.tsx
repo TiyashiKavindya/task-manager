@@ -1,5 +1,5 @@
 import { useAppContext } from "../../contexts"
-import { IoWarningOutline } from "react-icons/io5";
+import { IoWarningOutline } from "react-icons/io5"
 
 function Confirm() {
     const { confirmAlert, hideConfirm } = useAppContext()
@@ -13,17 +13,22 @@ function Confirm() {
                     <p className='text-sm text-center text-slate-500'>{confirmAlert.message}</p>
                 </div>
                 <div className="flex gap-4 justify-center items-center">
-
-                    <button className="w-20 px-4 py-2 rounded-lg border border-dark bg-light text-dark duration-300 ease-in-out"
+                    <button
+                        className="w-20 px-4 py-2 rounded-lg border border-dark bg-light text-dark duration-300 ease-in-out"
                         onClick={() => {
                             confirmAlert.onCencel && confirmAlert.onCencel()
                             hideConfirm()
-                        }}>{confirmAlert.cancelText}</button>
-                    <button className="w-20 px-4 py-2 rounded-lg border border-rose-600 bg-rose-600 text-white hover:bg-red-500 duration-300 ease-in-out"
+                        }}>
+                        {confirmAlert.cancelText}
+                    </button>
+                    <button
+                        className="w-20 px-4 py-2 rounded-lg border border-rose-600 bg-rose-600 text-white hover:bg-red-500 duration-300 ease-in-out"
                         onClick={() => {
                             confirmAlert.onOk()
                             hideConfirm()
-                        }}>{confirmAlert.okText}</button>
+                        }}>
+                        {confirmAlert.okText}
+                    </button>
                 </div>
             </div>
         </dialog>

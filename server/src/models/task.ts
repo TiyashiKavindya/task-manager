@@ -4,24 +4,41 @@ const Task = {
     selectAll: () => {
         return db.query(`
         SELECT 
-        t.*, 
-        s.title AS status_title, s.style AS status_style,
-        JSON_ARRAYAGG(CAST(tt.tag_id AS UNSIGNED)) AS tags
-        FROM task t
-        INNER JOIN status s ON t.status_id = s.id
-        LEFT JOIN task_tag tt ON t.id = tt.task_id GROUP BY t.id
+            t.*, 
+            s.title AS status_title, s.style AS status_style,
+            JSON_ARRAYAGG(CAST(tt.tag_id AS UNSIGNED)) AS tags
+        FROM 
+            task t
+        INNER JOIN 
+            status s 
+        ON 
+            t.status_id = s.id
+        LEFT JOIN 
+            task_tag tt 
+        ON 
+            t.id = tt.task_id GROUP BY t.id
         `)
     },
     selectByActivity: (id: number) => {
         return db.query(`
         SELECT 
-        t.*, 
-        s.title AS status_title, s.style AS status_style,
-        JSON_ARRAYAGG(CAST(tt.tag_id AS UNSIGNED)) AS tags
-        FROM task t
-        INNER JOIN status s ON t.status_id = s.id
-        LEFT JOIN task_tag tt ON t.id = tt.task_id
-        WHERE t.activity_id = ? GROUP BY t.id
+            t.*, 
+            s.title AS status_title, s.style AS status_style,
+            JSON_ARRAYAGG(CAST(tt.tag_id AS UNSIGNED)) AS tags
+            FROM 
+        task t
+        INNER JOIN 
+            status s 
+        ON 
+            t.status_id = s.id
+        LEFT JOIN 
+            task_tag tt 
+        ON 
+            t.id = tt.task_id
+        WHERE 
+            t.activity_id = ? 
+        GROUP BY 
+            t.id
         `, [id])
     },
     selectById: (id: number) => {
@@ -33,16 +50,16 @@ const Task = {
     thisWeekTaskCount: () => {
         return db.query(`
         SELECT 
-        task.status_id,
-        COUNT(task.id) AS task_count
+            task.status_id,
+            COUNT(task.id) AS task_count
         FROM 
-        task
+            task
         WHERE 
-        start_date >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY) AND
-        start_date < DATE_ADD(DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 1 WEEK) AND
-        task.status_id IN (2, 3, 4)
+            start_date >= DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY) AND
+            start_date < DATE_ADD(DATE_SUB(CURDATE(), INTERVAL WEEKDAY(CURDATE()) DAY), INTERVAL 1 WEEK) AND
+            task.status_id IN (2, 3, 4)
         GROUP BY 
-        task.status_id
+            task.status_id
         `)
     },
     taskCountPreDay: () => {
@@ -63,7 +80,7 @@ const Task = {
         GROUP BY 
             day_of_week, task.status_id
         ORDER BY 
-            FIELD(day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), task.status_id;
+            FIELD(day_of_week, 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'), task.status_id
         
         `)
     },
@@ -84,7 +101,7 @@ const Task = {
         GROUP BY 
             start_date, task.status_id
         ORDER BY 
-            start_date, task.status_id;
+            start_date, task.status_id
         `)
     },
     getThisMonthActivityStats: () => {
@@ -96,12 +113,20 @@ const Task = {
             status.style as status_style,
             COUNT(*) AS total_tasks,
             activity.title
-        FROM task
-        INNER JOIN activity ON task.activity_id = activity.id
-        INNER JOIN status ON task.status_id = status.id
-        WHERE MONTH(task.start_date) = MONTH(CURRENT_DATE()) AND YEAR(task.start_date) = YEAR(CURRENT_DATE())
+        FROM 
+            task
+        INNER JOIN 
+            activity 
+        ON 
+            task.activity_id = activity.id
+        INNER JOIN 
+            status 
+        ON 
+            task.status_id = status.id
+        WHERE 
+            MONTH(task.start_date) = MONTH(CURRENT_DATE()) AND YEAR(task.start_date) = YEAR(CURRENT_DATE())
         GROUP BY 
-            task.activity_id, task.status_id;        
+            task.activity_id, task.status_id       
         `)
     },
     create: (data: any[]) => {

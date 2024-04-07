@@ -23,7 +23,7 @@ function ActivityPage() {
       const res = await getActivities()
       setActivities(res.data)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }, [])
 
@@ -34,7 +34,7 @@ function ActivityPage() {
         await refetch()
         stopLoading()
       } catch (err) {
-        console.log(err);
+        console.log(err)
         stopLoading(err)
       }
     }
@@ -52,15 +52,23 @@ function ActivityPage() {
 
   return (
     <>
-      <Header title="Activities" actionButtonText="Activity" actionButtonClassName="bg-primary/90 text-white hover:bg-primary" actionButtonIcon={<IoIosAddCircleOutline />} onActionButtonClick={() => openModal(MODAL_NAMES.ADD_ACTIVITY)} />
-      <Modal name={MODAL_NAMES.ADD_ACTIVITY} title="Add New Activity" className=''>
+      <Header
+        title="Activities"
+        actionButtonText="Activity"
+        actionButtonClassName="bg-primary/90 text-white hover:bg-primary"
+        actionButtonIcon={<IoIosAddCircleOutline />}
+        onActionButtonClick={() => openModal(MODAL_NAMES.ADD_ACTIVITY)} />
+      <Modal
+        name={MODAL_NAMES.ADD_ACTIVITY}
+        title="Add New Activity">
         <AddNewActivityForm refetch={refetch} />
       </Modal>
       <div className="flex min-h-10 gap-6 max-w-[275px] sm:max-w-[350px] md:max-w-[600px] lg:max-w-[1000px] xl:max-w-[1200px] overflow-x-scroll no-scrollbar">
         <button
           className={`mix-blend-normal border-b-2 pb-3 hover:text-primary hover:border-primary duration-300 ease-in-out text-nowrap ${activeFilter === 'All' ? 'text-primary border-primary' : 'border-transparent'}`}
-          onClick={() => setActiveFilter('All')}
-        >All</button>
+          onClick={() => setActiveFilter('All')}>
+          All
+        </button>
         {
           statuses.length > 0 && statuses.map((status: any) => (
             <button key={status.id}
@@ -75,7 +83,9 @@ function ActivityPage() {
           <div className="grid grid-cols-1 gap-4">
             {
               filterdActivities.length > 0 ? filterdActivities.map((task: any) => (
-                <ActivityCard key={task.id} data={task}
+                <ActivityCard
+                  key={task.id}
+                  data={task}
                   refetch={refetch}
                 />
               )) : <div className="text-center text-gray-400">No Activity</div>

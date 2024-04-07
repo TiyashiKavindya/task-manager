@@ -142,10 +142,10 @@ function AnalyticsPage() {
     }, [])
 
     const getCurrentMonthAndYear = () => {
-        const currentDate = new Date();
-        const monthIndex = currentDate.getMonth();
-        const monthName = MONTH_NAMES[monthIndex];
-        const year = currentDate.getFullYear();
+        const currentDate = new Date()
+        const monthIndex = currentDate.getMonth()
+        const monthName = MONTH_NAMES[monthIndex]
+        const year = currentDate.getFullYear()
         return (
             <p>{monthName}, {year}</p>
         )
@@ -160,7 +160,7 @@ function AnalyticsPage() {
 
                         <div className="lg:col-span-3 w-full rounded-md p-6 bg-dark-light shadow">
                             <div className="flex justify-between items-center mb-8">
-                                <div className="">
+                                <div>
                                     <h1 className="text-lg font-semibold text-white">Tracking Task Performance</h1>
                                     <p className='text-gray-400 text-sm'>Visualizing Daily Task Counts Across Statuses Throughout the Current Month.</p>
                                 </div>

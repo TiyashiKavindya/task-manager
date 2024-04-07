@@ -9,7 +9,6 @@ import { getActivityTypes, getSelectOptions, saveActivity } from "../../api"
 import RMSelect from 'react-select'
 import { MultiValue } from 'react-select'
 
-
 type AddNewActivityFormProps = {
     refetch: () => void
 }
@@ -64,7 +63,11 @@ function AddNewActivityForm({ refetch }: AddNewActivityFormProps) {
             <Loading>
                 <form onSubmit={handleSave}>
                     <div className="flex flex-col sm:flex-row gap-2">
-                        <InputField required label="Title" placeholder="Enter the title of the task" name="title" />
+                        <InputField
+                            required
+                            label="Title"
+                            placeholder="Enter the title of the task"
+                            name="title" />
                         <div className="w-full sm:w-36">
                             <label>Activity Type</label>
                             <RMSelect
@@ -86,7 +89,12 @@ function AddNewActivityForm({ refetch }: AddNewActivityFormProps) {
                             />
                         </div>
                     </div>
-                    <TextArea required rows={3} label="Description" name="description" placeholder="Enter a detailed description" />
+                    <TextArea
+                        required
+                        rows={3}
+                        label="Description"
+                        name="description"
+                        placeholder="Enter a detailed description" />
                     <div className="mb-3">
                         <label>Tags</label>
                         <RMSelect
@@ -97,14 +105,30 @@ function AddNewActivityForm({ refetch }: AddNewActivityFormProps) {
                             onChange={(selected: MultiValue<SelectOption>) => setMultiSelectValue(selected)}
                         />
                     </div>
-                    <InputField label="Link (optional)" placeholder="Link to hobby/course page" name="url" />
+                    <InputField
+                        label="Link (optional)"
+                        placeholder="Link to hobby/course page"
+                        name="url" />
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2 mt-3">
-                        <DatePicker name="start_date" label="Start Date (optional)" />
-                        <DatePicker name="end_date" label="Due Date (optional)" />
+                        <DatePicker
+                            name="start_date"
+                            label="Start Date (optional)" />
+                        <DatePicker
+                            name="end_date"
+                            label="Due Date (optional)" />
                     </div>
                     <div className="mt-4 flex justify-between items-center">
-                        <button type="button" onClick={closeModal} className="btn border-2 border-dark text-dark">Cancel</button>
-                        <button type="submit" className="btn border-2 border-light bg-dark text-white hover:bg-dark-light">Save</button>
+                        <button
+                            type="button"
+                            onClick={closeModal}
+                            className="btn border-2 border-dark text-dark">
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="btn border-2 border-light bg-dark text-white hover:bg-dark-light">
+                            Save
+                        </button>
                     </div>
                 </form>
             </Loading>

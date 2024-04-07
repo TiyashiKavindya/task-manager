@@ -65,7 +65,11 @@ function AddNewTaskForm({ refetch, activityId }: AddNewTaskFormProps) {
             <Loading>
                 <form onSubmit={handleSave}>
                     <div className="flex flex-col sm:flex-row gap-2">
-                        <InputField required label="Title" placeholder="Enter the title of the task" name="name" />
+                        <InputField
+                            required
+                            label="Title"
+                            placeholder="Enter the title of the task"
+                            name="name" />
                         <div className="w-full sm:w-36">
                             <label>Status</label>
                             <ReactSelect
@@ -87,7 +91,12 @@ function AddNewTaskForm({ refetch, activityId }: AddNewTaskFormProps) {
                             />
                         </div>
                     }
-                    <TextArea required rows={4} label="Description" name="content" placeholder="Enter a detailed description" />
+                    <TextArea
+                        required
+                        rows={4}
+                        label="Description"
+                        name="content"
+                        placeholder="Enter a detailed description" />
                     <div className="mb-3">
                         <label>Tags</label>
                         <ReactSelect
@@ -99,12 +108,27 @@ function AddNewTaskForm({ refetch, activityId }: AddNewTaskFormProps) {
                         />
                     </div>
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
-                        <DatePicker required name="start_date" label="Start Date" />
-                        <DatePicker required name="end_date" label="Due Date" />
+                        <DatePicker
+                            required
+                            name="start_date"
+                            label="Start Date" />
+                        <DatePicker
+                            required
+                            name="end_date"
+                            label="Due Date" />
                     </div>
                     <div className="mt-4 flex justify-between items-center">
-                        <button type="button" onClick={closeModal} className="btn border-2 border-dark text-dark">Cancel</button>
-                        <button type="submit" className="btn border-2 border-light bg-dark text-white hover:bg-dark-light ">Save</button>
+                        <button
+                            type="button"
+                            onClick={closeModal}
+                            className="btn border-2 border-dark text-dark">
+                            Cancel
+                        </button>
+                        <button
+                            type="submit"
+                            className="btn border-2 border-light bg-dark text-white hover:bg-dark-light ">
+                            Save
+                        </button>
                     </div>
                 </form>
             </Loading>

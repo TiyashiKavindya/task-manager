@@ -7,7 +7,7 @@ const controller = {
         try {
             const result = await Task.selectAll()
             if (result.success) {
-                res.status(200).send(result.data);
+                res.status(200).send(result.data)
             }
         } catch (err) {
             res.status(404).send(err)
@@ -98,7 +98,7 @@ const controller = {
                 res.status(201).send(result)
             }
         } catch (err) {
-            console.log(err);
+            console.log(err)
             res.status(404).send(err)
         }
     },
@@ -129,7 +129,7 @@ const controller = {
             const id = req.params.id
             const result = await Task.delete(parseInt(id))
             if (result.success) {
-                res.status(200).send('Task deleted')
+                res.status(200).send(result)
             }
         } catch (err) {
             res.status(404).send(err)

@@ -6,22 +6,23 @@ import Loading from "../../components/Loading"
 import { getTaskCountPreDay, getThisWeekTaskCount, getTodayTasks, updateStatus } from "../../api"
 import DropDown from "../../components/DropDown"
 import { makeAsOptions } from "../../utils"
+import { DAY_NAMES } from "../../constants"
 
 interface TaskData {
-    day_of_week: string;
-    status_id: number;
-    status: string;
-    style: string;
-    task_count: number;
+    day_of_week: string
+    status_id: number
+    status: string
+    style: string
+    task_count: number
 }
 
 interface ChartData {
-    labels: string[];
+    labels: string[]
     datasets: {
-        label: string;
-        data: number[];
-        backgroundColor: string[];
-    }[];
+        label: string
+        data: number[]
+        backgroundColor: string[]
+    }[]
 }
 
 const options = {
@@ -50,28 +51,27 @@ function Dashboard() {
 
     const convertToChartJS = (data: TaskData[]): ChartData => {
 
-        const statusIds: number[] = [...new Set(data.map(row => row.status_id))];
-        const statuses: string[] = [...new Set(data.map(row => row.status))];
-        const dayNames: string[] = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        const statusIds: number[] = [...new Set(data.map(row => row.status_id))]
+        const statuses: string[] = [...new Set(data.map(row => row.status))]
         const chartData: ChartData = {
-            labels: dayNames,
+            labels: DAY_NAMES,
             datasets: [
                 { label: '', data: [], backgroundColor: [] },
                 { label: '', data: [], backgroundColor: [] },
                 { label: '', data: [], backgroundColor: [] }
             ]
-        };
+        }
         statusIds.forEach((statusId, index) => {
-            chartData.datasets[index].label = statuses[index].toString();
+            chartData.datasets[index].label = statuses[index].toString()
             data.filter(row => row.status_id === statusId).forEach(row => {
-                const datasetIndex = dayNames.indexOf(row.day_of_week);
+                const datasetIndex = DAY_NAMES.indexOf(row.day_of_week)
                 if (datasetIndex !== -1) {
-                    chartData.datasets[index].data[datasetIndex] = row.task_count;
-                    chartData.datasets[index].backgroundColor[datasetIndex] = row.style;
+                    chartData.datasets[index].data[datasetIndex] = row.task_count
+                    chartData.datasets[index].backgroundColor[datasetIndex] = row.style
                 }
-            });
-        });
-        return chartData;
+            })
+        })
+        return chartData
     }
 
     const getDashboardData = async () => {
@@ -113,7 +113,6 @@ function Dashboard() {
                 stopLoading(err)
             }
         }
-
         getData()
     }, [])
 
@@ -135,7 +134,6 @@ function Dashboard() {
                 <div className="grid grid-cols-1 lg:grid-cols-3 gap-8 mb-8 flex-grow">
                     <div className="col-span-2 flex flex-col gap-4">
                         <div className="flex flex-col md:flex-row justify-between item-center gap-4">
-
                             {
                                 statuses.slice(1).map((status: any, index: number) => (
                                     <div key={index} className="min-h-44 w-full rounded-md p-4 bg-dark-light shadow flex flex-col justify-center items-center gap-3">
@@ -153,18 +151,22 @@ function Dashboard() {
                         <p className="pb-4 font-semibold">Today's Tasks</p>
                         <div className="h-[92%] overflow-y-auto no-scrollbar">
                             {
-                                tasks.length > 0 ?
+                                tasks.length > 0
+                                    ?
                                     tasks.map((task: any, index: number) => (
                                         <div key={index} className="py-4 px-2 border-b border-b-dark bg-dark-light/80 hover:bg-dark-light duration-300 ease-in-out">
                                             <p className="text-sm line-clamp-2 text-ellipsis">{task.name}</p>
                                             <div className="flex justify-end mt-2">
-                                                <DropDown options={makeAsOptions(statuses, 'title', 'id')} onChange={(value) => handleUpdateStatus(task.id, value)}>
+                                                <DropDown
+                                                    options={makeAsOptions(statuses, 'title', 'id')}
+                                                    onChange={(value) => handleUpdateStatus(task.id, value)}>
                                                     <p className="text-sm rounded-full py-1 px-3 text-white" style={{ background: task.style }}>{task.status}</p>
                                                 </DropDown>
                                             </div>
                                         </div>
                                     ))
-                                    : <div className="flex justify-center items-center h-full">
+                                    :
+                                    <div className="flex justify-center items-center h-full">
                                         <p className="text-gray-200">No tasks for today.</p>
                                     </div>
                             }

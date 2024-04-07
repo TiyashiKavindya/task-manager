@@ -1,11 +1,11 @@
-import Dashboard from "./pages/Dashboard";
-import TaskPage from "./pages/Task";
-import ActivityPage from "./pages/Activity";
-import AnalyticsPage from "./pages/Analytics";
-import { AiOutlineHome } from "react-icons/ai";
-import { FaTasks } from "react-icons/fa";
-import { RxActivityLog } from "react-icons/rx";
-import { FiPieChart } from "react-icons/fi";
+import Dashboard from "./pages/Dashboard"
+import TaskPage from "./pages/Task"
+import ActivityPage from "./pages/Activity"
+import AnalyticsPage from "./pages/Analytics"
+import { AiOutlineHome } from "react-icons/ai"
+import { FaTasks } from "react-icons/fa"
+import { RxActivityLog } from "react-icons/rx"
+import { FiPieChart } from "react-icons/fi"
 
 type Route = {
     path: string

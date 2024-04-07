@@ -1,9 +1,9 @@
-import { updateActivityStatus } from "../../api";
-import DropDown from "../DropDown";
-import { useAppContext, useDataContext } from "../../contexts";
-import { convertDateFormat, makeAsOptions } from "../../utils";
-import { MdNavigateNext, MdOutlineChangeCircle } from "react-icons/md";
-import { Link } from "react-router-dom";
+import { updateActivityStatus } from "../../api"
+import DropDown from "../DropDown"
+import { useAppContext, useDataContext } from "../../contexts"
+import { convertDateFormat, makeAsOptions } from "../../utils"
+import { MdNavigateNext, MdOutlineChangeCircle } from "react-icons/md"
+import { Link } from "react-router-dom"
 
 type ActivityCardProps = {
     data: any
@@ -21,7 +21,7 @@ function ActivityCard({ data, refetch }: ActivityCardProps) {
                 refetch && refetch()
                 toast('Status Changed', 'Activity status updated successfully.')
             } else {
-                toast('Status Change Failed 1', 'Activity status update failed. Please try again.')
+                toast('Status Change Failed', 'Activity status update failed. Please try again.')
             }
         } catch (err) {
             console.log(err)
@@ -58,16 +58,19 @@ function ActivityCard({ data, refetch }: ActivityCardProps) {
             </div>
 
             <div className="flex justify-between items-center">
-
-                <DropDown options={makeAsOptions(statuses, 'title', 'id')} onChange={(value) => handleUpdateStatus(data.id, value)}>
+                <DropDown
+                    options={makeAsOptions(statuses, 'title', 'id')}
+                    onChange={(value) => handleUpdateStatus(data.id, value)}>
                     <div className=" w-36  flex items-center justify-between rounded-full" style={{ backgroundColor: data.status_style }} >
                         <div className="h-8 w-8 text-md rounded-full flex justify-center items-center bg-white" style={{ color: data.status_style }}>
-                            <MdOutlineChangeCircle className="" />
+                            <MdOutlineChangeCircle/>
                         </div>
                         <p className="pr-4 text-md text-white">{data.status_title}</p>
                     </div>
                 </DropDown>
-                <Link to={`/activity/${data.id}`} className="px-2 py-2 rounded-lg text-sm border text-center bg-light text-dark-light flex items-center justify-center gap-3">
+                <Link
+                    to={`/activity/${data.id}`}
+                    className="px-2 py-2 rounded-lg text-sm border text-center bg-light text-dark-light flex items-center justify-center gap-3">
                     <p className="pl-1">View More</p>
                     <MdNavigateNext className="text-xl" />
                 </Link>

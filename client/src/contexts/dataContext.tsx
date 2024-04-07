@@ -1,9 +1,9 @@
 /* eslint-disable react-refresh/only-export-components */
-import { createContext, useCallback, useContext, useEffect, useState } from "react";
-import { ContextProviderProps, Tag } from "../types";
-import { getActivityTypes, getStatus, getTags } from "../api";
+import { createContext, useCallback, useContext, useEffect, useState } from "react"
+import { ContextProviderProps, Tag } from "../types"
+import { getActivityTypes, getStatus, getTags } from "../api"
 
-export const Context = createContext<any>({});
+export const Context = createContext<any>({})
 
 export const useDataContext = () => {
   const store = useContext(Context)
@@ -18,15 +18,12 @@ function DataContextProvider({ children }: ContextProviderProps) {
   const [statuses, setStatuses] = useState([])
   const [tags, setTags] = useState([])
   const [activityTypes, setActivityTypes] = useState([])
-
   const updateStatuses = (statuses: any) => {
     if (statuses) setStatuses(statuses)
   }
-
   const updateTags = (tags: any) => {
     if (tags) setTags(tags)
   }
-
   const updateActivityTypes = (activityTypes: any) => {
     if (activityTypes) setActivityTypes(activityTypes)
   }
@@ -51,7 +48,6 @@ function DataContextProvider({ children }: ContextProviderProps) {
   const getTagInfoById = (id: number) => {
     return tags.find((tag: Tag) => tag.id === id)
   }
-
   const getTagsByIds = (id: number[]) => {
     return tags.filter((tag: Tag) => id.includes(tag.id))
   }

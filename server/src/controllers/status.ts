@@ -30,7 +30,7 @@ const controller = {
             const { title, style } = req.body
             const result = await db.query('INSERT INTO status (title, style) VALUES (?, ?)', [title, style])
             if (result.success) {
-                res.status(201).send('status added')
+                res.status(201).send(result)
             }
         } catch (err) {
             res.status(404).send(err)
@@ -42,7 +42,7 @@ const controller = {
             const { name, color } = req.body
             const result = await db.query('UPDATE status SET name = ?, color = ? WHERE id = ?', [name, color, id])
             if (result.success) {
-                res.status(200).send('status updated')
+                res.status(200).send(result)
             }
         } catch (err) {
             res.status(404).send(err)
@@ -53,7 +53,7 @@ const controller = {
             const id = req.params.id
             const result = await db.query('DELETE FROM status WHERE id = ?', [id])
             if (result.success) {
-                res.status(200).send('status deleted')
+                res.status(200).send(result)
             }
         } catch (err) {
             res.status(404).send(err)

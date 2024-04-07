@@ -4,39 +4,64 @@ const Activity = {
     selectAll: () => {
         return db.query(`
         SELECT 
-        a.id, a.title, a.start_date, a.end_date,
-        at.name as activity_type, 
-        s.title as status_title, s.style as status_style
-        FROM activity a 
-        INNER JOIN activity_type at ON a.activity_type_id = at.id 
-        INNER JOIN status s ON a.status_id = s.id
+            a.id, a.title, a.start_date, a.end_date,
+            at.name as activity_type, 
+            s.title as status_title, s.style as status_style
+        FROM 
+            activity a 
+        INNER JOIN 
+            activity_type at 
+        ON 
+            a.activity_type_id = at.id 
+        INNER JOIN 
+            status s 
+        ON 
+            a.status_id = s.id
         `)
     },
 
     selectById: (id: number) => {
         return db.query(`
         SELECT 
-        a.*, 
-        at.name as activity_type, 
-        s.title as status_title, s.style as status_style,
-        JSON_ARRAYAGG(CAST(atag.tag_id AS UNSIGNED)) AS tags
-        FROM activity a 
-        INNER JOIN activity_type at ON a.activity_type_id = at.id 
-        INNER JOIN status s ON a.status_id = s.id
-        LEFT JOIN activity_tag atag ON a.id = atag.activity_id WHERE a.id = ? GROUP BY a.id
+            a.*, 
+            at.name as activity_type, 
+            s.title as status_title, s.style as status_style,
+            JSON_ARRAYAGG(CAST(atag.tag_id AS UNSIGNED)) AS tags
+        FROM 
+            activity a 
+        INNER JOIN 
+            activity_type at 
+        ON 
+            a.activity_type_id = at.id 
+        INNER JOIN 
+            status s 
+        ON 
+            a.status_id = s.id
+        LEFT JOIN 
+            activity_tag atag 
+        ON 
+            a.id = atag.activity_id 
+        WHERE 
+            a.id = ? 
+        GROUP BY 
+            a.id
         `, [id])
     },
     getThisMonthActivityByStatus: () => {
         return db.query(`
         SELECT 
-        activity.status_id, 
-        COUNT(*) AS total_activities,
-        status.title AS status_title, 
-        status.style AS status_style
-        FROM activity
-        INNER JOIN status ON activity.status_id = status.id
-        WHERE MONTH(activity.start_date) = MONTH(CURRENT_DATE()) AND YEAR(activity.start_date) = YEAR(CURRENT_DATE())
-        GROUP BY activity.status_id;
+            activity.status_id, 
+            COUNT(*) AS total_activities,
+            status.title AS status_title, 
+            status.style AS status_style
+        FROM 
+            activity
+        INNER JOIN 
+            status 
+        ON 
+            activity.status_id = status.id
+        GROUP BY 
+            activity.status_id
         `)
     },
     selectAllNameAndIdOnly: () => {

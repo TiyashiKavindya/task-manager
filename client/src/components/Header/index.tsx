@@ -1,5 +1,5 @@
-import { AiOutlineMenu } from "react-icons/ai";
-import { useAppContext } from "../../contexts";
+import { AiOutlineMenu } from "react-icons/ai"
+import { useAppContext } from "../../contexts"
 
 type HeaderProps = {
     title?: string
@@ -23,9 +23,17 @@ function Header({ title, actionButtonClassName, onActionButtonClick, actionButto
                     }
                 </div>
                 <div className="fixed bottom-6 right-6 rounded-full shadow md:shadow-none md:static">
-                    <button className={`btn ${actionButtonClassName}`} onClick={onActionButtonClick}>{actionButtonIcon} {actionButtonText}</button>
+                    <button
+                        className={`btn ${actionButtonClassName}`}
+                        onClick={onActionButtonClick}>
+                        {actionButtonIcon} {actionButtonText}
+                    </button>
                 </div>
-                <button onClick={openSidebar} className="md:hidden"><AiOutlineMenu /></button>
+                <button
+                    onClick={openSidebar}
+                    className="md:hidden">
+                    <AiOutlineMenu />
+                </button>
             </div>
         </div>
     )

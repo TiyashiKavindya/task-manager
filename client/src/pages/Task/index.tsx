@@ -1,16 +1,16 @@
 import { useAppContext, useDataContext } from "../../contexts"
 import Modal from "../../components/Modal"
 import AddNewTaskForm from "./AddNewTaskForm"
-import { IoIosAddCircleOutline } from "react-icons/io";
-import Header from "../../components/Header";
-import { deleteTaskById, getTasks } from "../../api";
-import { useEffect, useState } from "react";
-import Loading from "../../components/Loading";
-import Scrollable from "../../components/Scrollable";
-import TaskCard from "../../components/TaskCard";
-import { MdAdd } from "react-icons/md";
-import { MODAL_NAMES } from "../../constants";
-import EditTaskForm from "./EditTaskForm";
+import { IoIosAddCircleOutline } from "react-icons/io"
+import Header from "../../components/Header"
+import { deleteTaskById, getTasks } from "../../api"
+import { useEffect, useState } from "react"
+import Loading from "../../components/Loading"
+import Scrollable from "../../components/Scrollable"
+import TaskCard from "../../components/TaskCard"
+import { MdAdd } from "react-icons/md"
+import { MODAL_NAMES } from "../../constants"
+import EditTaskForm from "./EditTaskForm"
 
 function TaskPage() {
   const { openModal, loading, stopLoading, toast, confirm } = useAppContext()
@@ -26,7 +26,7 @@ function TaskPage() {
       const res = await getTasks()
       setTasks(res.data)
     } catch (err) {
-      console.log(err);
+      console.log(err)
     }
   }
 
@@ -36,7 +36,7 @@ function TaskPage() {
       refetch()
       toast('Task deleted', 'Task deleted successfully.')
     } catch (err) {
-      console.log(err);
+      console.log(err)
       toast('Delete Failed', 'Failed to delete task.')
     }
   }
@@ -47,7 +47,7 @@ function TaskPage() {
         loading()
         await refetch()
       } catch (err) {
-        console.log(err);
+        console.log(err)
       } finally {
         stopLoading()
       }
@@ -111,7 +111,7 @@ function TaskPage() {
             ))}
             <button onClick={() => openModal(MODAL_NAMES.ADD_TASK)} type="button" className=" h-80 p-4 rounded-lg border-2 border-gray-300 border-dashed flex justify-center items-center gap-4 cursor-pointer hover:bg-dark-light duration-300 ease-in-out">
               <MdAdd className="text-3xl" />
-              <p className="">Add New Task</p>
+              <p>Add New Task</p>
             </button>
           </div>
         </Loading>
